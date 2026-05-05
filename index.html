@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Change Agent is a specialist AI tool for behavior change practitioners at conservation and environmental NGOs. Draws on cross-sector behavioral science to help you design better interventions, faster." />
+  <title>Change Agent — Behavior Change by Design</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & CUSTOM PROPERTIES
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cyan:        #00AFD8;
+      --blue:        #005BBB;
+      --near-black:  #1A1A1A;
+      --gray:        #5E6A71;
+      --light-gray:  #F2F3F4;
+      --white:       #FFFFFF;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --nav-h: 64px;
+      --radius:    4px;
+      --radius-lg: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--near-black);
+      background: var(--white);
+      font-size: 1rem;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ============================================================
+       LAYOUT UTILITY
+    ============================================================ */
+    .inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    @media (min-width: 768px)  { .inner { padding: 0 2rem; } }
+    @media (min-width: 1024px) { .inner { padding: 0 3rem; } }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: var(--nav-h);
+      background: rgba(26, 26, 26, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      transition: box-shadow 0.25s ease;
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Brand / logo */
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logomark {
+      width: 30px;
+      height: 30px;
+      background: var(--cyan);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logomark svg { display: block; }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      line-height: 1;
+    }
+
+    .nav-parent {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .nav-product {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    /* Desktop nav links */
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.01em;
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-signin {
+      color: rgba(255,255,255,0.35) !important;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-signin:hover { color: rgba(255,255,255,0.5) !important; }
+
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--gray);
+      background: rgba(255,255,255,0.08);
+      padding: 2px 7px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 18px;
+      background: var(--cyan);
+      color: var(--near-black) !important;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius);
+      transition: background 0.18s, transform 0.12s;
+      white-space: nowrap;
+      min-height: 36px;
+    }
+
+    .btn-nav:hover {
+      background: #11c2ec;
+      transform: translateY(-1px);
+      color: var(--near-black) !important;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: var(--radius);
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.28s, opacity 0.28s, width 0.28s;
+    }
+
+    .hamburger span:nth-child(2) { width: 80%; }
+
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; width: 100%; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      inset-inline: 0;
+      background: rgba(22, 22, 22, 0.97);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      z-index: 199;
+      padding: 0.75rem 1.25rem 1.25rem;
+    }
+
+    .nav-mobile.open { display: block; }
+
+    .nav-mobile ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-mobile ul a {
+      display: block;
+      padding: 11px 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-mobile ul a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+    }
+
+    .nav-mobile-signin { color: rgba(255,255,255,0.3) !important; }
+
+    .nav-mobile-cta {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .btn-mobile-cta {
+      display: flex;
+      justify-content: center;
+      padding: 13px 20px;
+      background: var(--cyan);
+      color: var(--near-black);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius);
+      transition: background 0.18s;
+      min-height: 48px;
+      align-items: center;
+    }
+
+    .btn-mobile-cta:hover { background: #11c2ec; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      min-height: 100vh;
+      background: var(--near-black);
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle grid overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 175, 216, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 175, 216, 0.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+    }
+
+    /* Blue radial glow, right side */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: -15%;
+      width: 65vw;
+      height: 65vw;
+      background: radial-gradient(circle, rgba(0, 91, 187, 0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 5rem 1.25rem 5rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-inner { padding: 6rem 2rem 6rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-inner { padding: 7rem 3rem 7rem; }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: blink 2.2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(46px, 10.5vw, 90px);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline .hl { color: var(--cyan); }
+
+    .hero-sub {
+      font-size: clamp(15px, 2.2vw, 18px);
+      color: rgba(255,255,255,0.58);
+      max-width: 560px;
+      line-height: 1.72;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.875rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--cyan);
+      color: var(--near-black);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      min-height: 48px;
+      transition: background 0.18s, transform 0.14s, box-shadow 0.18s;
+    }
+
+    .btn-primary:hover {
+      background: #11c2ec;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 175, 216, 0.38);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: rgba(255,255,255,0.78);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.18);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      min-height: 48px;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.45);
+      color: var(--white);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-divider {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .hero-provenance {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .hero-provenance span {
+      color: rgba(255,255,255,0.28);
+      display: block;
+      margin-top: 3px;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    /* ============================================================
+       SECTION SHARED STYLES
+    ============================================================ */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .eyebrow-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .eyebrow-label-blue  { color: var(--blue); }
+    .eyebrow-label-cyan  { color: var(--cyan); }
+    .eyebrow-label-light { color: rgba(0, 175, 216, 0.8); }
+
+    .section-headline {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(30px, 5.5vw, 52px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.875rem;
+    }
+
+    .sh-dark  { color: var(--near-black); }
+    .sh-white { color: var(--white); }
+
+    .section-sub {
+      font-size: 16.5px;
+      line-height: 1.72;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .ss-muted { color: var(--gray); }
+    .ss-light { color: rgba(255,255,255,0.55); }
+
+    /* ============================================================
+       LIVE CHAT PREVIEW
+    ============================================================ */
+    .demo-section {
+      background: var(--light-gray);
+      padding: 5rem 0;
+    }
+
+    .chat-wrap {
+      max-width: 740px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.04),
+        0 12px 40px rgba(0,0,0,0.09);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+
+    /* Chat chrome */
+    .chat-chrome {
+      background: var(--near-black);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .chat-chrome-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .chrome-mark {
+      width: 26px;
+      height: 26px;
+      background: var(--cyan);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .chrome-mark svg { display: block; }
+
+    .chrome-name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .chrome-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Messages */
+    .chat-body {
+      padding: 1.375rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.125rem;
+      max-height: 460px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    @media (min-width: 768px) {
+      .chat-body {
+        padding: 1.5rem 1.5rem;
+        max-height: 520px;
+      }
+    }
+
+    .chat-body::-webkit-scrollbar { width: 4px; }
+    .chat-body::-webkit-scrollbar-track { background: transparent; }
+    .chat-body::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.1);
+      border-radius: 2px;
+    }
+
+    /* User bubble — right */
+    .msg-row-user {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .msg-bubble-user {
+      background: var(--blue);
+      color: var(--white);
+      padding: 13px 16px;
+      border-radius: 12px 12px 3px 12px;
+      max-width: 78%;
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+
+    /* AI bubble — left */
+    .msg-row-ai {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .ai-avatar {
+      width: 30px;
+      height: 30px;
+      background: var(--cyan);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .ai-avatar svg { display: block; }
+
+    .msg-bubble-ai {
+      background: var(--light-gray);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 14px 16px;
+      border-radius: 3px 12px 12px 12px;
+      max-width: calc(100% - 40px);
+      font-size: 14px;
+      line-height: 1.73;
+      color: var(--near-black);
+    }
+
+    .msg-bubble-ai p + p { margin-top: 11px; }
+
+    .msg-followup {
+      display: block;
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-style: italic;
+      font-size: 13.5px;
+      color: var(--gray);
+    }
+
+    /* Disabled input row */
+    .chat-input-row {
+      border-top: 1px solid rgba(0,0,0,0.07);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+    }
+
+    .fake-input {
+      flex: 1;
+      height: 38px;
+      background: var(--light-gray);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 13px;
+      font-size: 13.5px;
+      color: rgba(94, 106, 113, 0.6);
+      cursor: default;
+      user-select: none;
+    }
+
+    .fake-send {
+      width: 38px;
+      height: 38px;
+      background: var(--cyan);
+      border: none;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.45;
+      cursor: not-allowed;
+      flex-shrink: 0;
+    }
+
+    /* Preview CTA */
+    .demo-cta {
+      text-align: center;
+      margin-top: 1.75rem;
+    }
+
+    .demo-cta p {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .demo-cta p strong {
+      color: var(--near-black);
+    }
+
+    .btn-blue {
+      background: var(--blue) !important;
+    }
+
+    .btn-blue:hover {
+      background: #0068d9 !important;
+      box-shadow: 0 8px 28px rgba(0, 91, 187, 0.35) !important;
+    }
+
+    /* ============================================================
+       FEATURES
+    ============================================================ */
+    .features-section {
+      background: var(--white);
+      padding: 5rem 0;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    .feature-card {
+      background: var(--light-gray);
+      border-top: 3px solid var(--cyan);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.75rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 21px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      margin-bottom: 0.625rem;
+      line-height: 1.15;
+    }
+
+    .card-desc {
+      font-size: 14.5px;
+      color: var(--gray);
+      line-height: 1.72;
+    }
+
+    /* ============================================================
+       WAITLIST
+    ============================================================ */
+    .waitlist-section {
+      background: var(--near-black);
+      padding: 5.5rem 0;
+    }
+
+    .waitlist-body {
+      max-width: 580px;
+      margin: 2.5rem auto 0;
+    }
+
+    /* Form */
+    .wl-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 560px) {
+      .form-row-2 { grid-template-columns: 1fr 1fr; }
+    }
+
+    .field { display: flex; flex-direction: column; gap: 5px; }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: var(--radius);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 0 14px;
+      height: 48px;
+      transition: border-color 0.18s, background 0.18s;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+    }
+
+    .field textarea {
+      height: auto;
+      padding: 12px 14px;
+      resize: vertical;
+      min-height: 74px;
+    }
+
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235E6A71' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 36px;
+    }
+
+    .field select option {
+      background: #111;
+      color: var(--white);
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--cyan);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+    .field-error { border-color: #f87171 !important; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--cyan);
+      color: var(--near-black);
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      min-height: 52px;
+      transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+      margin-top: 0.375rem;
+    }
+
+    .btn-submit:hover {
+      background: #11c2ec;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(0, 175, 216, 0.32);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .privacy-note {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      margin-top: 0.625rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    /* Success state */
+    .wl-success {
+      display: none;
+      text-align: center;
+      padding: 2.75rem 2rem;
+      background: rgba(0, 175, 216, 0.07);
+      border: 1px solid rgba(0, 175, 216, 0.18);
+      border-radius: var(--radius-lg);
+    }
+
+    .wl-success.visible { display: block; }
+
+    .success-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 175, 216, 0.14);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .wl-success h3 {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 0.625rem;
+    }
+
+    .wl-success p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--blue);
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
+
+    .footer-brand {
+      max-width: 400px;
+    }
+
+    .footer-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-mark {
+      width: 26px;
+      height: 26px;
+      background: rgba(255,255,255,0.14);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .footer-mark svg { display: block; }
+
+    .footer-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--white);
+    }
+
+    .footer-initiative {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.65;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-mission {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.35);
+      font-style: italic;
+      line-height: 1.65;
+    }
+
+    .footer-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-nav ul { text-align: right; }
+    }
+
+    .footer-nav a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.18s;
+    }
+
+    .footer-nav a:hover { color: var(--white); }
+
+    .footer-bottom {
+      padding-top: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .footer-copy {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================================
+       ACCESSIBILITY
+    ============================================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="inner nav-inner">
+
+      <a href="#" class="nav-brand" aria-label="Change Agent — home">
+        <div class="nav-logomark" aria-hidden="true">
+          <!-- Logomark: "CA" mark -->
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1 1h5.5a3 3 0 0 1 0 6H1V1z" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 7L10 13" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M13 1c1.5 0 4 0.5 4 3s-2 3-4 3" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M13 7c1 0 4 0.5 4 3s-2 3-4 3" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-product">Change Agent</span>
+        </div>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li>
+          <a href="#" class="nav-signin" aria-label="Sign In — coming soon">
+            Sign In <span class="badge">Coming soon</span>
+          </a>
+        </li>
+        <li>
+          <a href="#waitlist" class="btn-nav">Join waitlist</a>
+        </li>
+      </ul>
+
+      <!-- Hamburger (mobile) -->
+      <button
+        class="hamburger"
+        id="hamburger-btn"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open navigation menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="nav-mobile" id="mobile-nav" aria-hidden="true">
+    <ul role="list">
+      <li><a href="#features" class="mobile-nav-link">Features</a></li>
+      <li><a href="#about"    class="mobile-nav-link">About</a></li>
+      <li>
+        <a href="#" class="mobile-nav-link nav-mobile-signin" aria-label="Sign In — coming soon">
+          Sign In <span class="badge">Coming soon</span>
+        </a>
+      </li>
+    </ul>
+    <div class="nav-mobile-cta">
+      <a href="#waitlist" class="btn-mobile-cta mobile-nav-link">Join waitlist</a>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="hero" aria-labelledby="hero-h1">
+    <div class="inner hero-inner">
+
+      <p class="hero-eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        Early access open — join the waitlist
+      </p>
+
+      <h1 class="hero-headline" id="hero-h1">
+        You know behavioral<br>
+        science works. Now design<br>
+        interventions that <span class="hl">prove it.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Change Agent draws on behavioral evidence from across sectors — public health, financial behavior,
+        energy efficiency, food systems — so your intervention design isn't limited to what's already
+        been tried in conservation.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#waitlist" class="btn-primary" id="hero-waitlist-btn">
+          Join the waitlist
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#demo" class="btn-ghost" id="demo-btn">
+          See a demo
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M6 5.5l4 2-4 2V5.5z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero-divider" id="about">
+        <p class="hero-provenance">
+          Built by Rare's behavior and environment center.
+          <span>Grounded in peer-reviewed behavioral science. Not a general-purpose AI.</span>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       LIVE CHAT PREVIEW — Exchange 1 (cross-sector research)
+  ============================================================ -->
+  <section class="demo-section" id="demo" aria-labelledby="demo-h2">
+    <div class="inner">
+
+      <header class="section-header">
+        <p class="eyebrow-label eyebrow-label-blue">Live preview</p>
+        <h2 class="section-headline sh-dark" id="demo-h2">See Change Agent in action</h2>
+        <p class="section-sub ss-muted">
+          Here's how Change Agent finds behavioral leverage by drawing on evidence your field hasn't seen yet.
+        </p>
+      </header>
+
+      <div class="chat-wrap" role="region" aria-label="Change Agent chat preview — read only">
+
+        <!-- Chrome bar -->
+        <div class="chat-chrome">
+          <div class="chat-chrome-brand">
+            <div class="chrome-mark" aria-hidden="true">
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1h4a2 2 0 0 1 0 4H1V1z" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M5 5l2.5 4" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M9.5 1c1 0 3.5 0.4 3.5 2.5S10.5 6 9.5 6c1 0 3.5 0.4 3.5 2.5S10.5 9 9.5 9" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="chrome-name">Change Agent</span>
+          </div>
+          <div class="chrome-status">
+            <span class="status-dot" aria-hidden="true"></span>
+            Preview
+          </div>
+        </div>
+
+        <!-- Conversation -->
+        <div class="chat-body" role="log" aria-live="off" aria-label="Sample conversation">
+
+          <!-- Practitioner -->
+          <div class="msg-row-user">
+            <div class="msg-bubble-user" role="article" aria-label="Practitioner message">
+              We're running a program to reduce bycatch by getting small-scale fishers in the Philippines
+              to switch to more selective gear. Most fishers understand the problem — they've seen declining
+              catches themselves. But gear adoption is stalling. Where should we be looking for behavioral leverage?
+            </div>
+          </div>
+
+          <!-- Change Agent -->
+          <div class="msg-row-ai">
+            <div class="ai-avatar" aria-hidden="true">
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1h4a2 2 0 0 1 0 4H1V1z" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M5 5l2.5 4" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M9.5 1c1 0 3.5 0.4 3.5 2.5S10.5 6 9.5 6c1 0 3.5 0.4 3.5 2.5S10.5 9 9.5 9" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="msg-bubble-ai" role="article" aria-label="Change Agent response">
+              <p>If comprehension isn't the barrier, the stall is likely happening at one of three points:
+              the perceived cost of switching (upfront financial risk, learning curve, social exposure to
+              peers who haven't switched yet), insufficient social norm signaling from influential community
+              members, or a mismatch between when the decision feels relevant and when your program is present.</p>
+
+              <p>The most transferable evidence here comes from energy efficiency and clean cookstove adoption
+              research — sectors where the same pattern appears repeatedly: awareness is high, intent is moderate,
+              adoption is low. A 2021 meta-analysis of cookstove programs in sub-Saharan Africa found that
+              programs combining peer demonstration (seeing a trusted neighbor use the equipment successfully)
+              with time-limited financial de-risking (a 90-day trial period, no upfront cost) increased
+              sustained adoption rates by 34–41% compared to information-only approaches.</p>
+
+              <p>For your context, I'd suggest testing two things before scaling: first, identify 3–5 fishers
+              per community who are already willing to try selective gear and make their experience visible —
+              a peer demonstration effect, not a testimonial campaign. Second, explore whether a gear-lending
+              or cost-share model for the first season reduces the perceived risk enough to get past the first
+              use. The behavioral lever isn't knowledge — it's reducing the cost of being the first mover.</p>
+
+              <span class="msg-followup">
+                What does your current program offer at the moment of decision? I can help you map where the friction is highest.
+              </span>
+            </div>
+          </div>
+
+        </div><!-- /chat-body -->
+
+        <!-- Disabled input -->
+        <div class="chat-input-row" aria-label="Input disabled — join the waitlist to use Change Agent">
+          <div class="fake-input" aria-hidden="true">Ask a follow-up…</div>
+          <button class="fake-send" disabled aria-label="Send — waitlist access required">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <path d="M2 7.5h11M9 3.5l4 4-4 4" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+      </div><!-- /chat-wrap -->
+
+      <div class="demo-cta">
+        <p><strong>This is a preview.</strong> Join the waitlist to use Change Agent on your next project.</p>
+        <a href="#waitlist" class="btn-primary btn-blue" id="demo-waitlist-btn">
+          Get early access
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FEATURE CARDS
+  ============================================================ -->
+  <section class="features-section" id="features" aria-labelledby="features-h2">
+    <div class="inner">
+
+      <header class="section-header">
+        <p class="eyebrow-label eyebrow-label-blue">Capabilities</p>
+        <h2 class="section-headline sh-dark" id="features-h2">What Change Agent does</h2>
+        <p class="section-sub ss-muted">
+          Three capabilities built for intervention designers — not repurposed from a general-purpose AI.
+        </p>
+      </header>
+
+      <div class="cards-grid" role="list">
+
+        <!-- Card 1: Cross-sector research -->
+        <article class="feature-card" role="listitem" aria-labelledby="card1-title">
+          <svg class="card-icon" viewBox="0 0 42 42" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <!-- Network / nodes icon -->
+            <circle cx="21" cy="6"  r="4" stroke="#00AFD8" stroke-width="1.5"/>
+            <circle cx="6"  cy="35" r="4" stroke="#00AFD8" stroke-width="1.5"/>
+            <circle cx="36" cy="35" r="4" stroke="#00AFD8" stroke-width="1.5"/>
+            <circle cx="21" cy="23" r="3.5" stroke="#00AFD8" stroke-width="1.5"/>
+            <line x1="21" y1="10" x2="21" y2="19.5" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="18.6" y1="25.8" x2="9.8" y2="31.6" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="23.4" y1="25.8" x2="32.2" y2="31.6" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="10" y1="35" x2="32" y2="35" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 3"/>
+          </svg>
+          <h3 class="card-title" id="card1-title">Cross-sector research</h3>
+          <p class="card-desc">
+            Change Agent draws on behavioral evidence from public health, finance, energy, food systems,
+            and conservation — so you're not limited to what's already been tried in your sector.
+            The most powerful behavioral insights often travel across fields; Change Agent surfaces them before
+            you need to discover them yourself.
+          </p>
+        </article>
+
+        <!-- Card 2: Intervention critique -->
+        <article class="feature-card" role="listitem" aria-labelledby="card2-title">
+          <svg class="card-icon" viewBox="0 0 42 42" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <!-- Document + magnify icon -->
+            <rect x="6" y="4" width="22" height="28" rx="2.5" stroke="#00AFD8" stroke-width="1.5"/>
+            <line x1="11" y1="12" x2="23" y2="12" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="11" y1="17" x2="23" y2="17" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="11" y1="22" x2="18" y2="22" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="31" cy="31" r="6.5" stroke="#00AFD8" stroke-width="1.5"/>
+            <line x1="35.6" y1="35.6" x2="39.5" y2="39.5" stroke="#00AFD8" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M28.5 31l2 2 3.5-3.5" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3 class="card-title" id="card2-title">Intervention critique</h3>
+          <p class="card-desc">
+            Describe your current intervention design and Change Agent will identify gaps, flag weak
+            behavioral levers, and suggest evidence-based refinements. It's the rigorous peer review
+            your work deserves — available before your pilot begins, not after the results come back.
+          </p>
+        </article>
+
+        <!-- Card 3: Design frameworks -->
+        <article class="feature-card" role="listitem" aria-labelledby="card3-title">
+          <svg class="card-icon" viewBox="0 0 42 42" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid / framework icon -->
+            <rect x="4"  y="4"  width="14" height="14" rx="2" stroke="#00AFD8" stroke-width="1.5"/>
+            <rect x="24" y="4"  width="14" height="14" rx="2" stroke="#00AFD8" stroke-width="1.5"/>
+            <rect x="4"  y="24" width="14" height="14" rx="2" stroke="#00AFD8" stroke-width="1.5"/>
+            <rect x="24" y="24" width="14" height="14" rx="2" stroke="#00AFD8" stroke-width="1.5"/>
+            <line x1="18" y1="11" x2="24" y2="11" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="11" y1="18" x2="11" y2="24" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="31" y1="18" x2="31" y2="24" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="18" y1="31" x2="24" y2="31" stroke="#00AFD8" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <h3 class="card-title" id="card3-title">Design frameworks</h3>
+          <p class="card-desc">
+            Access structured behavioral frameworks and decision tools — from COM-B diagnosis to
+            theory of change validation — that keep your team anchored to evidence at every stage.
+            Built into your workflow, not filed away in a methodology document no one reads.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       WAITLIST
+  ============================================================ -->
+  <section class="waitlist-section" id="waitlist" aria-labelledby="waitlist-h2">
+    <div class="inner">
+
+      <header class="section-header">
+        <p class="eyebrow-label eyebrow-label-light">Early access</p>
+        <h2 class="section-headline sh-white" id="waitlist-h2">Get ahead of your next intervention</h2>
+        <p class="section-sub ss-light">
+          Change Agent is in development. Join the waitlist and be among the first practitioners
+          to access the tool when we open the pilot.
+        </p>
+      </header>
+
+      <div class="waitlist-body">
+
+        <!-- Form -->
+        <form class="wl-form" id="wl-form" novalidate aria-label="Waitlist signup">
+
+          <div class="field">
+            <label for="wl-email">Email address <span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="wl-email"
+              name="email"
+              placeholder="you@organization.org"
+              required
+              autocomplete="email"
+              aria-required="true"
+            />
+          </div>
+
+          <div class="form-row-2">
+            <div class="field">
+              <label for="wl-role">Role <span aria-hidden="true">*</span></label>
+              <select id="wl-role" name="role" required aria-required="true">
+                <option value="" disabled selected>Your role</option>
+                <option value="program-manager">Program Manager</option>
+                <option value="campaign-designer">Campaign Designer</option>
+                <option value="field-lead">Field Programme Lead</option>
+                <option value="me-specialist">M&amp;E Specialist</option>
+                <option value="behavioral-researcher">Behavioral Researcher</option>
+                <option value="executive">Executive / Leadership</option>
+                <option value="consultant">Consultant / Advisor</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="wl-org">Organization <span aria-hidden="true">*</span></label>
+              <input
+                type="text"
+                id="wl-org"
+                name="org"
+                placeholder="Your organization"
+                required
+                autocomplete="organization"
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="wl-usecase">
+              Primary use case
+              <span style="color:rgba(255,255,255,0.25); font-weight:400; text-transform:none; letter-spacing:0; font-size:11px;"> — optional</span>
+            </label>
+            <textarea
+              id="wl-usecase"
+              name="usecase"
+              rows="2"
+              placeholder="e.g. Designing a behavior change program for sustainable fishing practices in coastal communities"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit" id="wl-submit">
+            Join the waitlist
+          </button>
+
+          <p class="privacy-note" aria-live="off">
+            <svg width="11" height="13" viewBox="0 0 11 13" fill="none" aria-hidden="true">
+              <rect x="1" y="5.5" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M3.5 5.5V4a2 2 0 0 1 4 0v1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+            We'll only use your email to notify you about Change Agent access and updates.
+          </p>
+
+        </form>
+
+        <!-- Success message (hidden until submit) -->
+        <div class="wl-success" id="wl-success" role="alert" aria-live="polite" aria-atomic="true">
+          <div class="success-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M5 13l6 6 10-10" stroke="#00AFD8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>You're on the list.</h3>
+          <p>We'll be in touch before the public launch. Thank you for your interest in Change Agent.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="inner">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <div class="footer-wordmark">
+            <div class="footer-mark" aria-hidden="true">
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1h4a2 2 0 0 1 0 4H1V1z" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M5 5l2.5 4" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M9.5 1c1 0 3.5 0.4 3.5 2.5S10.5 6 9.5 6c1 0 3.5 0.4 3.5 2.5S10.5 9 9.5 9" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="footer-name">Change Agent</span>
+          </div>
+          <p class="footer-initiative">Created by Rare</p>
+          <p class="footer-tagline">Grounded in peer-reviewed behavioral science.</p>
+          <p class="footer-mission">Rare inspires the pride that motivates people and communities to care for their natural world.</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <ul role="list">
+            <li><a href="https://rare.org/about" rel="noopener noreferrer" target="_blank">About Rare</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="mailto:labs@rare.org">Contact</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Rare. All rights reserved.</p>
+        <p class="footer-copy">Change Agent is in development. Pilot access only.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ── Nav scroll shadow ─────────────────────────────────────
+    const nav = document.getElementById('main-nav');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 16);
+    }, { passive: true });
+
+    // ── Hamburger / mobile menu ───────────────────────────────
+    const btn       = document.getElementById('hamburger-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    function closeMobile() {
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open navigation menu');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      mobileNav.classList.remove('open');
+    }
+
+    btn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.contains('open');
+      if (isOpen) {
+        closeMobile();
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.setAttribute('aria-label', 'Close navigation menu');
+        mobileNav.setAttribute('aria-hidden', 'false');
+        mobileNav.classList.add('open');
+      }
+    });
+
+    // Close on any mobile nav link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobile);
+    });
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (!btn.contains(e.target) && !mobileNav.contains(e.target)) {
+        closeMobile();
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMobile();
+    });
+
+    // ── Waitlist form ─────────────────────────────────────────
+    const form      = document.getElementById('wl-form');
+    const successEl = document.getElementById('wl-success');
+    const submitBtn = document.getElementById('wl-submit');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const emailEl = document.getElementById('wl-email');
+      const roleEl  = document.getElementById('wl-role');
+      const orgEl   = document.getElementById('wl-org');
+
+      const email = emailEl.value.trim();
+      const role  = roleEl.value;
+      const org   = orgEl.value.trim();
+
+      // Clear previous error states
+      [emailEl, roleEl, orgEl].forEach(el => el.classList.remove('field-error'));
+
+      // Validate required fields
+      let firstInvalid = null;
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailEl.classList.add('field-error');
+        firstInvalid = firstInvalid || emailEl;
+      }
+      if (!role) {
+        roleEl.classList.add('field-error');
+        firstInvalid = firstInvalid || roleEl;
+      }
+      if (!org) {
+        orgEl.classList.add('field-error');
+        firstInvalid = firstInvalid || orgEl;
+      }
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        // Remove error highlight on input
+        [emailEl, roleEl, orgEl].forEach(el => {
+          el.addEventListener('input change', () => el.classList.remove('field-error'), { once: true });
+          el.addEventListener('change', () => el.classList.remove('field-error'), { once: true });
+        });
+        return;
+      }
+
+      // Simulate async submit
+      submitBtn.textContent = 'Joining…';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        form.setAttribute('aria-hidden', 'true');
+        form.style.display = 'none';
+        successEl.classList.add('visible');
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        trackEvent('waitlist_form_submit', { role, org });
+      }, 700);
+    });
+
+    // Remove error state on input
+    ['wl-email', 'wl-role', 'wl-org'].forEach(id => {
+      const el = document.getElementById(id);
+      const event = el.tagName === 'SELECT' ? 'change' : 'input';
+      el.addEventListener(event, () => el.classList.remove('field-error'));
+    });
+
+    // ── Analytics stubs ───────────────────────────────────────
+    // Wire up GA4 or Plausible here when analytics is configured.
+    function trackEvent(name, props = {}) {
+      // gtag('event', name, props);
+      // plausible(name, { props });
+      console.debug('[rs:analytics]', name, props);
+    }
+
+    document.getElementById('hero-waitlist-btn').addEventListener('click',
+      () => trackEvent('cta_click_waitlist_hero'));
+
+    document.getElementById('demo-waitlist-btn').addEventListener('click',
+      () => trackEvent('cta_click_waitlist_demo'));
+
+    document.getElementById('demo-btn').addEventListener('click',
+      () => trackEvent('cta_click_demo'));
+
+    // Nav waitlist click
+    document.querySelector('.btn-nav')?.addEventListener('click',
+      () => trackEvent('cta_click_waitlist_nav'));
+
+    // Chat preview scroll tracking
+    const chatBody = document.querySelector('.chat-body');
+    let chatScrolled = false;
+    chatBody?.addEventListener('scroll', () => {
+      if (!chatScrolled && chatBody.scrollTop > 40) {
+        chatScrolled = true;
+        trackEvent('chat_preview_scroll');
+      }
+    }, { passive: true });
+
+  </script>
+
+</body>
+</html>
