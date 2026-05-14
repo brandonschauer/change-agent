@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Change Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rare-blue:#005BBB;
+    --rare-blue-hover:#004A99;
+    --labs-cyan:#00AFD8;
+    --ink:#1A1A1A;
+    --slate:#5E6A71;
+    --paper:#F4F3EF;
+    --paper-warm:#ede9de;
+    --surface:#FFFFFF;
+    --rule:#E3E1DA;
+    --rule-strong:#C9C6BD;
+
+    --headline:"Barlow Semi Condensed", system-ui, sans-serif;
+    --serif:"Source Sans 3", system-ui, sans-serif;
+
+    --container:1220px;
+    --gutter:24px;
+    --nav-h:56px;
+    --nav-h-desktop:64px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{min-height:100vh;}
+
+  .container{
+    max-width:var(--container);
+    width:100%;
+    margin:0 auto;
+    padding-left:var(--gutter);
+    padding-right:var(--gutter);
+  }
+
+  /* ===================== NAVIGATION ===================== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;
+    background:var(--surface);
+    height:var(--nav-h);
+    z-index:100;
+    transition:opacity .35s ease, transform .35s ease;
+    will-change:opacity, transform;
+  }
+  .nav.is-hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-8px);
+  }
+  .nav.is-returning{
+    transition:none;
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:100%;
+    gap:24px;
+  }
+  .nav-logo{display:flex;align-items:center;}
+  .nav-logo img{display:block;height:24px;width:auto;}
+
+  .nav-right{display:flex;align-items:center;gap:24px;}
+  .nav-links{display:flex;align-items:center;gap:24px;list-style:none;}
+  .nav-links a{
+    font-family:var(--serif);
+    color:var(--ink);
+    text-decoration:none;
+    font-size:16px;
+    font-weight:400;
+    letter-spacing:0;
+    position:relative;
+    padding:2px 0;
+    transition:color .15s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:-2px;
+    height:1.5px;background:var(--rare-blue);
+    transform:scaleX(0);transform-origin:left center;
+    transition:transform .18s ease;
+  }
+  .nav-links a:hover{color:var(--rare-blue);}
+  .nav-links a:hover::after{transform:scaleX(1);}
+
+  /* Sign In — ghost / outline pill */
+  .btn-signin{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--headline);font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;font-size:13px;
+    background:transparent;color:var(--rare-blue);
+    border:1.5px solid var(--rare-blue);
+    padding:9px 22px;border-radius:999px;
+    text-decoration:none;cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn-signin:hover{background:var(--rare-blue);color:#fff;}
+
+  /* Join — solid pill */
+  .btn-join{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--headline);font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;font-size:13px;
+    background:var(--rare-blue);color:#fff;
+    border:1.5px solid var(--rare-blue);
+    padding:9px 22px;border-radius:999px;
+    text-decoration:none;cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .btn-join:hover{background:var(--rare-blue-hover);border-color:var(--rare-blue-hover);}
+
+  /* Hamburger (mobile) */
+  .nav-hamburger{
+    display:none;
+    width:44px;height:44px;
+    align-items:center;justify-content:center;
+    background:transparent;border:0;cursor:pointer;
+    color:var(--ink);
+    border-radius:8px;
+    margin-right:-10px;
+  }
+  .nav-hamburger:hover{background:rgba(0,0,0,.04);}
+  .nav-hamburger svg{width:26px;height:26px;}
+
+  /* ===================== MOBILE OVERLAY ===================== */
+  .nav-overlay{
+    position:fixed;inset:0;
+    background:var(--rare-blue);
+    z-index:200;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+    display:flex;flex-direction:column;
+    padding:0 var(--gutter);
+  }
+  .nav-overlay.is-open{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .nav-overlay-top{
+    height:var(--nav-h);
+    display:flex;align-items:center;justify-content:space-between;
+    flex:none;
+  }
+  .nav-overlay-top .nav-logo img{height:24px;}
+  .nav-overlay-close{
+    width:44px;height:44px;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:transparent;border:0;cursor:pointer;
+    color:#fff;border-radius:8px;
+    margin-right:-10px;
+  }
+  .nav-overlay-close:hover{background:rgba(255,255,255,.08);}
+  .nav-overlay-close svg{width:26px;height:26px;}
+
+  .nav-overlay-links{
+    flex:1;
+    display:flex;flex-direction:column;justify-content:center;
+    align-items:flex-start;
+    gap:20px;
+    list-style:none;
+    padding:0;
+  }
+  .nav-overlay-links a{
+    font-family:var(--headline);
+    font-weight:700;
+    font-size:40px;
+    line-height:1.05;
+    color:#fff;
+    text-decoration:none;
+    text-transform:none;
+    letter-spacing:-0.005em;
+    transition:color .15s ease;
+  }
+  .nav-overlay-links a:hover,
+  .nav-overlay-links a:active{color:var(--labs-cyan);}
+
+  .nav-overlay-cta{
+    margin-bottom:40px;
+    flex:none;
+  }
+  .nav-overlay-cta{display:flex;justify-content:flex-start;}
+  .nav-overlay-cta .btn-overlay-join{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--labs-cyan);color:var(--ink);
+    font-family:var(--headline);font-weight:700;
+    font-size:16px;letter-spacing:.06em;text-transform:uppercase;
+    border:0;border-radius:999px;
+    padding:18px 36px;
+    text-decoration:none;cursor:pointer;
+    transition:filter .15s ease;
+  }
+  .nav-overlay-cta .btn-overlay-join:hover{filter:brightness(1.05);}
+
+  /* Lock body scroll when overlay open */
+  body.nav-open{overflow:hidden;}
+
+  /* ===================== SECTIONS ===================== */
+  main{padding-top:var(--nav-h);}
+  @media (min-width: 992px){
+    main{padding-top:var(--nav-h-desktop);}
+  }
+
+  .section{
+    width:100%;
+  }
+
+  .section-hero{
+    background:var(--paper);
+    min-height:80vh;
+    padding:48px 0 0;
+    display:flex;align-items:flex-start;
+    transition:min-height 300ms ease;
+  }
+  .section-hero.is-expanded{ min-height:100vh; }
+
+  .hero-inner{
+    display:flex;flex-direction:column;
+    align-items:center;
+    width:100%;
+    gap:40px;
+  }
+
+  .hero-headline{
+    font-family:var(--headline);
+    font-weight:700;
+    text-transform:uppercase;
+    color:var(--ink);
+    text-align:center;
+    font-size: clamp(40px, 5.6vw, 76px);
+    line-height:0.95;
+    letter-spacing:-0.01em;
+    text-wrap:balance;
+    max-width:1100px;
+  }
+  @media (max-width: 575.98px){
+    .hero-headline{ font-size: 34px; }
+  }
+  .hero-accent{ color:var(--labs-cyan); }
+
+  .hero-row{
+    display:flex;flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    gap:0;
+  }
+  .hero-illustration{
+    width:40%;
+    max-width:460px;
+    flex:none;
+    display:flex;align-items:center;justify-content:flex-end;
+  }
+  .hero-illustration img{
+    display:block;width:100%;height:auto;
+  }
+  .hero-demo-col{
+    flex:1 1 auto;
+    max-width:680px;
+    display:flex;align-items:center;
+  }
+
+  @media (max-width: 991.98px){
+    .hero-illustration{ display:none; }
+    .hero-demo-col{ max-width:680px; width:100%; margin:0 auto; }
+  }
+
+  /* ---------- Demo card ---------- */
+  .demo-card{
+    background:#fff;
+    border:1px solid #E0DED8;
+    border-radius:12px;
+    box-shadow:0 1px 0 rgba(0,0,0,.02);
+    display:flex;flex-direction:column;
+    width:100%;
+    padding:26px 28px;
+    min-height:340px;
+  }
+  .demo-thread{
+    display:flex;flex-direction:column;gap:18px;
+    align-items:stretch;
+  }
+
+  .msg{
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.55;
+    color:var(--ink);
+  }
+  .msg-user{
+    align-self:flex-end;
+    background:#EAE8E0;
+    padding:11px 18px;
+    border-radius:20px;
+    max-width:90%;
+    text-align:left;
+    min-height:1.55em;
+  }
+  .msg-agent{ align-self:stretch; max-width:100%; }
+  .msg-agent.is-pending{ opacity:0; }
+  .msg-agent.is-revealed{ opacity:1; transition: opacity 400ms ease; }
+  .msg-agent p + p,
+  .msg-agent p + ol, .msg-agent ol + p,
+  .msg-agent p + ul, .msg-agent ul + p,
+  .msg-agent p + hr, .msg-agent hr + p{ margin-top:10px; }
+  .msg-agent ol, .msg-agent ul{ margin:8px 0 0 22px; padding:0; }
+  .msg-agent ol li, .msg-agent ul li{ margin-top:4px; }
+  .msg-agent hr{ border:0;border-top:1px solid #E0DED8;margin:14px 0; }
+  .msg-agent strong{ font-weight:700;color:var(--ink); }
+  .msg-agent em{ font-style:italic;color:var(--slate); }
+
+  .type-cursor{
+    display:inline-block;width:2px;height:1.05em;
+    background:var(--ink);vertical-align:-2px;margin-left:1px;
+    animation:type-blink 1s steps(2) infinite;
+  }
+  .type-cursor.is-done{ display:none; }
+  @keyframes type-blink{ 50%{opacity:0;} }
+
+  .btn-expand{
+    align-self:flex-start;
+    font-family:var(--headline);font-weight:700;
+    font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--rare-blue);background:transparent;
+    border:1.5px solid var(--rare-blue);
+    border-radius:999px;
+    padding:8px 20px;cursor:pointer;
+    margin-top:6px;
+    opacity:0;
+    transition:opacity 300ms ease, background .15s ease, color .15s ease;
+  }
+  .btn-expand.is-shown{ opacity:1; }
+  .btn-expand:hover{ background:var(--rare-blue);color:#fff; }
+  .btn-expand.is-hidden{ display:none; }
+
+  /* Unified scrollable conversation when expanded */
+  .demo-scroll{
+    transition: max-height 300ms ease;
+  }
+  .demo-scroll.is-open{
+    max-height:420px;
+    overflow-y:auto;
+    padding-right:6px;
+  }
+  .demo-scroll::-webkit-scrollbar{ width:8px; }
+  .demo-scroll::-webkit-scrollbar-thumb{ background:#D9D6CD;border-radius:8px; }
+  .demo-scroll::-webkit-scrollbar-track{ background:transparent; }
+
+  .demo-expanded{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition: opacity 300ms ease;
+  }
+  .demo-expanded.is-open{
+    max-height:none;
+    opacity:1;
+    margin-top:14px;
+    border-top:1px solid #E0DED8;
+    padding-top:18px;
+  }
+  .demo-expanded-inner{
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .section-how{background:var(--paper-warm);padding:80px 0;}
+
+  /* ===================== HOW IT WORKS ===================== */
+  .how-head{ margin-bottom:48px; }
+  .how-title{
+    font-family:var(--headline);
+    font-weight:700;
+    text-transform:uppercase;
+    color:var(--rare-blue);
+    font-size: clamp(36px, 4.2vw, 52px);
+    line-height:1.0;
+    letter-spacing:-0.005em;
+  }
+  .how-sub{
+    margin-top:8px;
+    font-family:var(--serif);
+    font-size:17px;
+    line-height:1.55;
+    color:var(--ink);
+  }
+
+  .how-steps{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:24px;
+  }
+  @media (max-width: 991.98px){
+    .how-steps{ grid-template-columns:repeat(2, 1fr); row-gap:40px; }
+  }
+  @media (max-width: 575.98px){
+    .how-steps{ grid-template-columns:1fr; row-gap:32px; }
+  }
+
+  .how-step{ display:flex; flex-direction:column; }
+
+  .how-step-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+  }
+  .how-num{
+    flex:none;
+    width:32px;height:32px;
+    border-radius:50%;
+    background:var(--rare-blue);
+    color:#fff;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--headline);font-weight:700;
+    font-size:14px;
+    letter-spacing:0;
+  }
+  .how-rule{
+    flex:1 1 auto;
+    height:1px;
+    background:#C8C4B8;
+  }
+  .how-chevron{
+    flex:none;
+    color:var(--slate);
+    font-size:16px;
+    line-height:1;
+    font-family:var(--serif);
+  }
+  /* On the final step, omit chevron */
+  .how-step:last-child .how-chevron{ display:none; }
+  /* Hide rule + chevron at end of each row on tablet */
+  @media (max-width: 991.98px){
+    .how-step:nth-child(2) .how-chevron,
+    .how-step:nth-child(4) .how-chevron{ display:none; }
+  }
+  /* Mobile: hide all rules + chevrons */
+  @media (max-width: 575.98px){
+    .how-rule, .how-chevron{ display:none; }
+  }
+
+  .how-badge{
+    align-self:flex-start;
+    display:inline-flex;align-items:center;
+    font-family:var(--headline);font-weight:700;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--rare-blue);
+    background: rgba(0, 91, 187, 0.10);
+    padding:5px 12px;
+    border-radius:999px;
+  }
+  .how-step-title{
+    font-family:var(--headline);
+    font-weight:600;
+    font-size:22px;
+    line-height:1.2;
+    color:var(--ink);
+    margin-top:6px;
+    letter-spacing:0;
+  }
+  .how-step-desc{
+    font-family:var(--serif);
+    font-size:15px;
+    line-height:1.55;
+    color:var(--ink);
+    margin-top:4px;
+  }
+  .section-cases{background:var(--paper);padding:80px 0;}
+
+  /* ===================== USE CASES ===================== */
+  .uc-head{ margin-bottom:48px; }
+  .uc-title{
+    font-family:var(--headline);font-weight:700;text-transform:uppercase;
+    color:var(--rare-blue);
+    font-size: clamp(36px, 4.2vw, 52px);
+    line-height:1.0;letter-spacing:-0.005em;
+  }
+  .uc-sub{
+    margin-top:8px;
+    font-family:var(--serif);font-size:17px;line-height:1.55;color:var(--ink);
+  }
+
+  .uc-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    align-items:stretch;
+  }
+  @media (max-width: 991.98px){
+    .uc-grid{ grid-template-columns:repeat(2, 1fr); gap:20px; }
+  }
+  @media (max-width: 575.98px){
+    .uc-grid{ grid-template-columns:1fr; gap:16px; }
+  }
+
+  .uc-card{
+    background:#fff;
+    border:1px solid #E0DED8;
+    border-radius:12px;
+    display:flex;flex-direction:column;
+    overflow:hidden;
+    height:100%;
+  }
+  .uc-top{
+    padding:24px 24px 16px 24px;
+    display:flex;flex-direction:column;
+    flex:1 1 auto;
+  }
+  .uc-card-title{
+    font-family:var(--headline);font-weight:600;
+    font-size:22px;line-height:1.2;
+    color:var(--ink);
+  }
+  .uc-desc{
+    margin-top:6px;
+    font-family:var(--serif);font-size:15px;line-height:1.5;color:var(--ink);
+  }
+  .uc-roadmap{
+    margin-top:10px;
+    font-family:var(--serif);font-weight:600;
+    font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--slate);
+  }
+  .uc-bottom{
+    background:#EDE9DE;
+    border-top:1px solid #E0DED8;
+    border-radius:0 0 12px 12px;
+    padding:0;
+    min-height:160px;
+    overflow:hidden;
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .uc-bottom img{
+    display:block;
+    width:100%;
+    height:auto;
+    object-fit:cover;
+  }
+
+  .uc-card.uc-more{
+    border-style:dashed;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    padding:48px 24px;
+    min-height:280px;
+  }
+  .uc-more-title{
+    font-family:var(--headline);font-weight:600;
+    font-size:22px;line-height:1.2;color:var(--slate);
+  }
+  .uc-more-sub{
+    margin-top:4px;
+    font-family:var(--serif);font-size:15px;line-height:1.5;color:var(--slate);
+  }
+  .section-join{background:var(--rare-blue);padding:80px 0;}
+
+  /* ===================== JOIN ===================== */
+  .join-head{ margin-bottom:40px; }
+  .join-title{
+    font-family:var(--headline);font-weight:700;text-transform:uppercase;
+    color:#fff;
+    font-size: clamp(36px, 4.2vw, 52px);
+    line-height:1.0;letter-spacing:-0.005em;
+  }
+  .join-sub{
+    margin-top:8px;
+    font-family:var(--serif);font-size:17px;line-height:1.55;color:#fff;
+    max-width:760px;
+  }
+
+  .join-form{
+    background:#fff;
+    border-radius:12px;
+    padding:40px;
+    max-width:680px;
+    margin-left:auto;margin-right:auto;
+  }
+  .join-row{ display:block; margin-bottom:20px; }
+  .join-row:last-of-type{ margin-bottom:0; }
+  .join-row-2col{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  }
+  .join-field{ display:flex;flex-direction:column; }
+  .join-label{
+    font-family:var(--serif);font-weight:600;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .join-input,
+  .join-textarea{
+    font-family:var(--serif);font-weight:400;
+    font-size:15px;line-height:1.4;color:var(--ink);
+    background:#fff;
+    border:1px solid #C8C4B8;
+    border-radius:6px;
+    padding:10px 14px;
+    width:100%;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .join-textarea{ resize:vertical; min-height:104px; }
+  .join-input::placeholder,
+  .join-textarea::placeholder{ color:var(--slate); }
+  .join-input:focus,
+  .join-textarea:focus{
+    outline:none;
+    border-color:var(--rare-blue);
+    box-shadow: inset 0 0 0 1px var(--rare-blue);
+  }
+  .join-field.has-error .join-input,
+  .join-field.has-error .join-textarea{
+    border-color:#AA1948;
+    box-shadow: inset 0 0 0 1px #AA1948;
+  }
+  .join-error{
+    display:none;
+    margin-top:6px;
+    font-family:var(--serif);font-size:13px;line-height:1.5;
+    color:#AA1948;
+  }
+  .join-field.has-error .join-error{ display:block; }
+  .join-general-error{
+    display:none;
+    margin-top:16px;
+    font-family:var(--serif);font-size:13px;line-height:1.5;
+    color:#AA1948;
+  }
+  .join-general-error a{ color:#AA1948;text-decoration:underline; }
+  .join-general-error.is-shown{ display:block; }
+
+  .btn-waitlist[disabled]{ opacity:.7;cursor:not-allowed; }
+  .btn-waitlist[disabled]:hover{ background:var(--rare-blue); }
+
+  /* Confirmation */
+  .join-confirm{
+    display:none;
+    max-width:680px;
+    margin-left:auto;margin-right:auto;
+  }
+  .join-confirm.is-shown{ display:block; }
+  .join-confirm-title{
+    font-family:var(--headline);font-weight:700;text-transform:uppercase;
+    color:#fff;
+    font-size: clamp(28px, 3vw, 36px);
+    line-height:1.05;letter-spacing:-0.005em;
+  }
+  .join-confirm-body{
+    margin-top:12px;
+    font-family:var(--serif);font-size:17px;line-height:1.55;
+    color:rgba(255,255,255,.85);
+  }
+  .join-confirm-body a{ color:var(--labs-cyan);text-decoration:underline; }
+
+  .join-submit-row{
+    display:flex;align-items:center;gap:16px;
+    margin-top:8px;
+  }
+  .btn-waitlist{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--rare-blue);color:#fff;
+    font-family:var(--headline);font-weight:700;
+    font-size:14px;letter-spacing:.06em;text-transform:uppercase;
+    border:0;border-radius:999px;
+    padding:14px 28px;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .btn-waitlist:hover{ background:var(--rare-blue-hover); }
+  .btn-waitlist .arrow{ margin-left:8px; }
+  .join-privacy{
+    font-family:var(--serif);font-size:13px;line-height:1.5;
+    color:rgba(26,26,26,.65);
+  }
+  /* privacy line lives inside white card -> dark text; spec says white 70% but that's on dark bg.
+     Privacy line is to the right of button (inside the white form), so use dark ink at 65% for legibility. */
+
+  @media (max-width: 767.98px){
+    .join-row-2col{ grid-template-columns:1fr; gap:20px; }
+  }
+  @media (max-width: 575.98px){
+    .join-form{ padding:24px; }
+    .join-submit-row{ flex-direction:column; align-items:stretch; gap:12px; }
+    .btn-waitlist{ width:100%; }
+    .join-privacy{ order:2; }
+  }
+  .section-footer{background:var(--labs-cyan);padding:40px 0;}
+
+  /* ===================== FOOTER ===================== */
+  .footer-top{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .footer-left{ display:flex;flex-direction:column;align-items:flex-start; }
+  .footer-logo{ width:140px;height:auto;display:block; }
+  .footer-rare{
+    margin-top:8px;
+    font-family:var(--headline);font-weight:700;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;text-decoration:none;
+  }
+  .footer-rare:hover{ text-decoration:underline; }
+  .footer-tag{
+    margin-top:6px;
+    font-family:var(--serif);font-size:13px;line-height:1.5;
+    color:rgba(255,255,255,.8);
+  }
+  .footer-right{
+    display:flex;align-items:center;gap:24px;
+  }
+  .footer-link{
+    font-family:var(--serif);font-size:13px;
+    color:#fff;text-decoration:none;
+  }
+  .footer-link:hover{ text-decoration:underline; }
+
+  .footer-rule{
+    border:0;border-top:1px solid rgba(255,255,255,.2);
+    margin:24px 0 0 0;
+  }
+  .footer-copy{
+    margin-top:24px;
+    text-align:center;
+    font-family:var(--serif);font-size:12px;
+    color:rgba(255,255,255,.6);
+  }
+
+  @media (max-width: 767.98px){
+    .footer-top{ flex-direction:column; align-items:center; text-align:center; gap:16px; }
+    .footer-left{ align-items:center; }
+    .footer-right{ justify-content:center; }
+  }
+
+  /* Empty content zone */
+  .zone{
+    min-height:200px;
+    display:flex;align-items:center;justify-content:center;
+    border:1px dashed rgba(94,106,113,.35);
+  }
+  .section-join .zone{border-color:rgba(255,255,255,.35);}
+  .section-footer .zone{
+    min-height:120px;
+    border-color:rgba(26,26,26,.25);
+  }
+
+  .zone-label{
+    font-family:var(--serif);
+    font-size:13px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    color:var(--slate);
+  }
+  .section-join .zone-label{color:#fff;}
+  .section-footer .zone-label{color:var(--ink);}
+
+  /* ===================== BREAKPOINTS ===================== */
+  /* < 576px (xs) — default */
+
+  /* ≥ 576px (sm) */
+  @media (min-width: 576px){
+    :root{ --gutter:32px; }
+  }
+
+  /* ≥ 768px (md) */
+  @media (min-width: 768px){
+    :root{ --gutter:40px; }
+  }
+
+  /* < 992px — hamburger replaces nav links */
+  @media (max-width: 991.98px){
+    .nav-links, .nav-right .btn-signin, .nav-right .btn-join{display:none;}
+    .nav-hamburger{display:inline-flex;}
+  }
+
+  /* ≥ 992px (lg) — desktop nav: 64px tall, hamburger hidden */
+  @media (min-width: 992px){
+    :root{ --gutter:48px; --nav-h:64px; }
+    .nav-hamburger{display:none;}
+  }
+
+  /* ≥ 1200px (xl) */
+  @media (min-width: 1200px){
+    :root{ --gutter:48px; }
+  }
+
+  /* ≥ 1400px (xxl) */
+  @media (min-width: 1400px){
+    :root{ --gutter:48px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="#" aria-label="Change Agent — Home">
+        <img src="assets/change-agent-logo-blue.svg" alt="Change Agent" />
+      </a>
+
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#how">How it Works</a></li>
+          <li><a href="#cases">Use Cases</a></li>
+        </ul>
+        <a class="btn-signin" href="#signin">Sign In</a>
+        <a class="btn-join" href="#join">Join</a>
+        <button class="nav-hamburger" id="nav-hamburger" type="button" aria-label="Open menu" aria-controls="nav-overlay" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="7" x2="21" y2="7"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="17" x2="21" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== MOBILE NAV OVERLAY ===================== -->
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+    <div class="nav-overlay-top">
+      <a class="nav-logo" href="#" aria-label="Change Agent — Home">
+        <img src="assets/change-agent-logo-white.svg" alt="Change Agent" />
+      </a>
+      <button class="nav-overlay-close" id="nav-overlay-close" type="button" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="5" x2="19" y2="19"></line>
+          <line x1="19" y1="5" x2="5" y2="19"></line>
+        </svg>
+      </button>
+    </div>
+
+    <ul class="nav-overlay-links">
+      <li><a href="#how" data-overlay-link>How it Works</a></li>
+      <li><a href="#cases" data-overlay-link>Use Cases</a></li>
+      <li><a href="#signin" data-overlay-link>Sign In</a></li>
+    </ul>
+
+    <div class="nav-overlay-cta">
+      <a class="btn-overlay-join" href="#join" data-overlay-link>Join</a>
+    </div>
+  </div>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <section class="section section-hero" id="hero" data-screen-label="Hero">
+      <div class="container hero-inner">
+
+        <h1 class="hero-headline">You know behavioral science works. Now design interventions that <span class="hero-accent">prove it.</span></h1>
+
+        <div class="hero-row">
+          <div class="hero-illustration">
+            <img src="assets/hero_desk_woman_illustration.png" alt="" />
+          </div>
+
+          <div class="hero-demo-col">
+            <div class="demo-card" id="demo-card">
+              <div class="demo-scroll" id="demo-scroll">
+              <div class="demo-thread">
+                <div class="msg msg-user" id="msg-user-initial"><span class="msg-text"></span><span class="type-cursor" id="type-cursor"></span></div>
+
+                <div class="msg msg-agent is-pending" id="msg-agent-initial">
+                  <p>That&rsquo;s a classic drop-off pattern. Before I pull research from the knowledge base, three quick things:</p>
+                  <ol>
+                    <li>Who are your typical volunteers?</li>
+                    <li>What do you think brings them back &mdash; or doesn&rsquo;t?</li>
+                    <li>What are you working with (budget, staff, tools)?</li>
+                  </ol>
+                </div>
+
+                <button class="btn-expand" id="btn-expand" type="button" aria-expanded="false" aria-controls="demo-expanded">Expand +</button>
+              </div>
+
+              <div class="demo-expanded" id="demo-expanded" aria-hidden="true">
+                <div class="demo-expanded-inner">
+
+                  <div class="msg msg-user">Mostly adults in their 20s and 30s who live near the beach. They come for the social vibe and to feel like they&rsquo;re doing something. I don&rsquo;t think they come back because nothing happens between events &mdash; no community, no felt impact. Tight budget, two-person team, and we&rsquo;d love patterns from outside the conservation world that work with what we already have (Instagram, email).</div>
+
+                  <div class="msg msg-agent">
+                    <p>That&rsquo;s enough to work with. The diagnosis: their initial motivations &mdash; social connection and a sense of impact &mdash; aren&rsquo;t being reinforced between events.</p>
+                    <p>I searched the knowledge base and pulled 11 proven intervention patterns across three behavioral levers:</p>
+                    <ul>
+                      <li><strong>Social Influence</strong> &mdash; identity priming and community-building between events</li>
+                      <li><strong>Information Framing</strong> &mdash; visualizing personal and collective impact</li>
+                      <li><strong>Group Incentives</strong> &mdash; non-monetary recognition for collective achievement</li>
+                    </ul>
+                    <p>Here are three patterns, each drawn from a different sector and adapted to your constraints:</p>
+                    <hr>
+                    <p><strong>1. Impact Story Circles &amp; Digital Badges</strong> &mdash; <em>Social Influence</em></p>
+                    <p>Inspired by online gaming communities and social movements. After each cleanup, host a 15-minute Story Circle on Instagram Live where 2&ndash;3 volunteers share a reflection. Volunteers who attend three cleanups earn a shareable Digital Steward Badge.</p>
+                    <p><em>Why it works:</em> Storytelling builds shared identity; badges leverage social recognition &mdash; both well-evidenced drivers of sustained engagement.</p>
+                    <hr>
+                    <p><strong>2. Peer-to-Peer &ldquo;Cleanup Crews&rdquo;</strong> &mdash; <em>Choice Architecture</em></p>
+                    <p>Inspired by buddy systems in fitness and study groups. At sign-up, offer volunteers the option to be matched into a small crew based on a shared interest. Crews swap Instagram handles at the event and get a simple shared challenge.</p>
+                    <p><em>Why it works:</em> Peer accountability and social defaults significantly increase return participation &mdash; proven across health and education research.</p>
+                    <hr>
+                    <p><strong>3. Personalized Impact Dashboard &amp; Future Pledges</strong> &mdash; <em>Information + Commitment</em></p>
+                    <p>Inspired by personal finance apps and footprint calculators. A few days after each cleanup, DM each volunteer a personalized summary with a one-click pledge button to commit to the next event.</p>
+                    <p><em>Why it works:</em> Personalized feedback boosts perceived efficacy; one-click commitments are a proven driver of follow-through.</p>
+                    <hr>
+                    <p>Want me to go deeper on any of these &mdash; or adapt them further?</p>
+                  </div>
+
+                </div>
+              </div>
+              </div><!-- /demo-scroll -->
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-how" id="how" data-screen-label="How it Works">
+      <div class="container">
+        <div class="how-head">
+          <h2 class="how-title">How it Works</h2>
+          <p class="how-sub">You share your challenge, Change Agent does the work.</p>
+        </div>
+
+        <div class="how-steps">
+
+          <div class="how-step">
+            <div class="how-step-header">
+              <span class="how-num">1</span>
+              <span class="how-rule" aria-hidden="true"></span>
+              <span class="how-chevron" aria-hidden="true">&rsaquo;</span>
+            </div>
+            <span class="how-badge">Diagnosis</span>
+            <h3 class="how-step-title">Change Agent reads your situation</h3>
+            <p class="how-step-desc">It identifies the behavioral drivers at play &mdash; what&rsquo;s really stopping people from acting.</p>
+          </div>
+
+          <div class="how-step">
+            <div class="how-step-header">
+              <span class="how-num">2</span>
+              <span class="how-rule" aria-hidden="true"></span>
+              <span class="how-chevron" aria-hidden="true">&rsaquo;</span>
+            </div>
+            <span class="how-badge">Search</span>
+            <h3 class="how-step-title">Then searches the evidence</h3>
+            <p class="how-step-desc">Decades of cross-sector research you&rsquo;d never find on your own.</p>
+          </div>
+
+          <div class="how-step">
+            <div class="how-step-header">
+              <span class="how-num">3</span>
+              <span class="how-rule" aria-hidden="true"></span>
+              <span class="how-chevron" aria-hidden="true">&rsaquo;</span>
+            </div>
+            <span class="how-badge">Synthesis</span>
+            <h3 class="how-step-title">Turns it into ideas</h3>
+            <p class="how-step-desc">Structured intervention patterns, ready to use or critique.</p>
+          </div>
+
+          <div class="how-step">
+            <div class="how-step-header">
+              <span class="how-num">4</span>
+              <span class="how-rule" aria-hidden="true"></span>
+              <span class="how-chevron" aria-hidden="true">&rsaquo;</span>
+            </div>
+            <span class="how-badge">Output</span>
+            <h3 class="how-step-title">You walk away ready</h3>
+            <p class="how-step-desc">A behavioral brief your team and funders can act on immediately.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-cases" id="cases" data-screen-label="Use Cases">
+      <div class="container">
+        <div class="uc-head">
+          <h2 class="uc-title">Use Cases</h2>
+          <p class="uc-sub">Change Agent superpowers your intervention design at key moments.</p>
+        </div>
+
+        <div class="uc-grid">
+
+          <div class="uc-card">
+            <div class="uc-top">
+              <h3 class="uc-card-title">The Kickoff</h3>
+              <p class="uc-desc">Walk into your first team meeting with a behavioral diagnosis, not just a hunch.</p>
+            </div>
+            <div class="uc-bottom"><img src="assets/use_case_the-kickoff.png" alt=""></div>
+          </div>
+
+          <div class="uc-card">
+            <div class="uc-top">
+              <h3 class="uc-card-title">Idea Hunt</h3>
+              <p class="uc-desc">Find the breakthrough idea that no one in your sector has tried yet.</p>
+              <span class="uc-roadmap">On Roadmap</span>
+            </div>
+            <div class="uc-bottom"><img src="assets/use_case_idea-hunt.png" alt=""></div>
+          </div>
+
+          <div class="uc-card">
+            <div class="uc-top">
+              <h3 class="uc-card-title">Intervention Critique</h3>
+              <p class="uc-desc">Know what&rsquo;s missing from your design so your next steps have impact.</p>
+              <span class="uc-roadmap">On Roadmap</span>
+            </div>
+            <div class="uc-bottom"><img src="assets/use_case_intervention-critique.png" alt=""></div>
+          </div>
+
+          <div class="uc-card">
+            <div class="uc-top">
+              <h3 class="uc-card-title">Workshop Anchor</h3>
+              <p class="uc-desc">Keep your team&rsquo;s design decisions grounded in real-time behavioral science.</p>
+              <span class="uc-roadmap">On Roadmap</span>
+            </div>
+            <div class="uc-bottom"><img src="assets/use_case_workshop-anchor.png" alt=""></div>
+          </div>
+
+          <div class="uc-card">
+            <div class="uc-top">
+              <h3 class="uc-card-title">Funder-Ready Rationale</h3>
+              <p class="uc-desc">Write the behavioral evidence section of your proposal: grounded, citable, complete.</p>
+              <span class="uc-roadmap">On Roadmap</span>
+            </div>
+            <div class="uc-bottom"><img src="assets/use_case_funder-ready-rationale.png" alt=""></div>
+          </div>
+
+          <div class="uc-card uc-more">
+            <div>
+              <div class="uc-more-title">More coming</div>
+              <div class="uc-more-sub">shaped by your input.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-join" id="join" data-screen-label="Join">
+      <div class="container">
+        <div class="join-head">
+          <h2 class="join-title">Join</h2>
+          <p class="join-sub">Change Agent is in development. Join the waitlist and be among the first practitioners to access the tool when we open the pilot.</p>
+        </div>
+
+        <form class="join-form" id="join-form" novalidate>
+          <div class="join-row">
+            <div class="join-field" data-field="email">
+              <label class="join-label" for="join-email">Email Address <span aria-hidden="true">*</span></label>
+              <input class="join-input" type="email" id="join-email" name="email" placeholder="you@organization.org" autocomplete="email" required>
+              <span class="join-error" data-error-for="email"></span>
+            </div>
+          </div>
+
+          <div class="join-row join-row-2col">
+            <div class="join-field" data-field="role">
+              <label class="join-label" for="join-role">Role <span aria-hidden="true">*</span></label>
+              <input class="join-input" type="text" id="join-role" name="role" placeholder="Your role" required>
+              <span class="join-error" data-error-for="role"></span>
+            </div>
+            <div class="join-field" data-field="organization">
+              <label class="join-label" for="join-org">Organization <span aria-hidden="true">*</span></label>
+              <input class="join-input" type="text" id="join-org" name="organization" placeholder="Your organization" required>
+              <span class="join-error" data-error-for="organization"></span>
+            </div>
+          </div>
+
+          <div class="join-row">
+            <div class="join-field" data-field="use_case">
+              <label class="join-label" for="join-use">Primary Use Case &mdash; optional</label>
+              <textarea class="join-textarea" id="join-use" name="use_case" rows="4" placeholder="e.g., Designing a behavior change program for sustainable fishing practices in coastal communities"></textarea>
+            </div>
+          </div>
+
+          <div class="join-row join-submit-row">
+            <button class="btn-waitlist" id="join-submit" type="submit"><span class="btn-label">Join the Waitlist</span> <span class="arrow" aria-hidden="true">&rarr;</span></button>
+            <span class="join-privacy">We&rsquo;ll only use your email to notify you about access and updates.</span>
+          </div>
+
+          <div class="join-general-error" id="join-general-error" role="alert">
+            Something went wrong. Please try again, or message <a href="https://www.linkedin.com/in/brandonschauer/" target="_blank" rel="noopener"><em>Brandon Schauer</em></a> on LinkedIn.
+          </div>
+        </form>
+
+        <div class="join-confirm" id="join-confirm" role="status" aria-live="polite">
+          <h3 class="join-confirm-title">You&rsquo;re on the list.</h3>
+          <p class="join-confirm-body">We&rsquo;ll be in touch when the pilot opens. In the meantime, if you have questions or want to share more about your work, message <a href="https://www.linkedin.com/in/brandonschauer/" target="_blank" rel="noopener"><em>Brandon Schauer</em></a> on LinkedIn.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section section-footer" id="footer" data-screen-label="Footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-left">
+            <img class="footer-logo" src="assets/change-agent-logo-white.svg" alt="Change Agent">
+            <a class="footer-rare" href="https://rare.org" target="_blank" rel="noopener">Created by Rare</a>
+            <span class="footer-tag">Grounded in peer-reviewed behavioral science.</span>
+          </div>
+          <div class="footer-right">
+            <a class="footer-link" href="#privacy">Privacy Policy</a>
+            <a class="footer-link" href="#terms">Terms</a>
+          </div>
+        </div>
+        <hr class="footer-rule">
+        <p class="footer-copy">&copy; 2026 Rare. All rights reserved. &middot; Change Agent is in development. Join the waitlist.</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Fade-on-scroll nav: fades out smoothly past 80px,
+    // reappears instantly when returning toward the top.
+    (function(){
+      var nav = document.getElementById('nav');
+      var threshold = 80;
+      var ticking = false;
+      var hidden = false;
+
+      function update(){
+        var y = window.scrollY || window.pageYOffset || 0;
+        if (y > threshold && !hidden){
+          nav.classList.remove('is-returning');
+          nav.classList.add('is-hidden');
+          hidden = true;
+        } else if (y <= threshold && hidden){
+          // Instant reappear: kill transition for one frame.
+          nav.classList.add('is-returning');
+          nav.classList.remove('is-hidden');
+          hidden = false;
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              nav.classList.remove('is-returning');
+            });
+          });
+        }
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function(){
+        if (!ticking){
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      update();
+    })();
+
+    // Hero: typewriter user message -> fade in agent response -> show expand button
+    (function(){
+      var userTextEl = document.querySelector('#msg-user-initial .msg-text');
+      var cursorEl = document.getElementById('type-cursor');
+      var agentEl = document.getElementById('msg-agent-initial');
+      var expandBtn = document.getElementById('btn-expand');
+      var expandedEl = document.getElementById('demo-expanded');
+      var heroEl = document.getElementById('hero');
+
+      if (!userTextEl) return;
+
+      var text = "We run beach cleanups every month. People sign up enthusiastically, show up once, and we never see them again. We\u2019ve tried reminder emails and free t-shirts. What are we missing?";
+
+      var i = 0;
+      function typeNext(){
+        if (i <= text.length){
+          userTextEl.textContent = text.slice(0, i);
+          i++;
+          setTimeout(typeNext, 40);
+        } else {
+          cursorEl.classList.add('is-done');
+          setTimeout(function(){
+            agentEl.classList.remove('is-pending');
+            agentEl.classList.add('is-revealed');
+            setTimeout(function(){
+              expandBtn.classList.add('is-shown');
+            }, 500);
+          }, 600);
+        }
+      }
+      setTimeout(typeNext, 400);
+
+      var isOpen = false;
+      expandBtn.addEventListener('click', function(){
+        if (isOpen) return;
+        isOpen = true;
+        heroEl.classList.add('is-expanded');
+        expandedEl.classList.add('is-open');
+        expandedEl.setAttribute('aria-hidden','false');
+        expandBtn.setAttribute('aria-expanded','true');
+        var scrollEl = document.getElementById('demo-scroll');
+        if (scrollEl) scrollEl.classList.add('is-open');
+        expandBtn.classList.add('is-hidden');
+      });
+    })();
+
+    // Join form: validation + Formspree submit
+    (function(){
+      var form = document.getElementById('join-form');
+      if (!form) return;
+      var submitBtn = document.getElementById('join-submit');
+      var btnLabel = submitBtn.querySelector('.btn-label');
+      var btnArrow = submitBtn.querySelector('.arrow');
+      var generalError = document.getElementById('join-general-error');
+      var confirmEl = document.getElementById('join-confirm');
+      var ENDPOINT = 'https://formspree.io/f/xvzljoer';
+
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function setFieldError(name, msg){
+        var field = form.querySelector('[data-field="' + name + '"]');
+        if (!field) return;
+        var errEl = field.querySelector('[data-error-for="' + name + '"]');
+        if (msg){
+          field.classList.add('has-error');
+          if (errEl) errEl.textContent = msg;
+        } else {
+          field.classList.remove('has-error');
+          if (errEl) errEl.textContent = '';
+        }
+      }
+
+      function clearAllErrors(){
+        ['email','role','organization'].forEach(function(n){ setFieldError(n, ''); });
+        generalError.classList.remove('is-shown');
+      }
+
+      function validate(values){
+        var ok = true;
+        if (!values.email){
+          setFieldError('email', 'Please enter your email address.');
+          ok = false;
+        } else if (!emailRe.test(values.email)){
+          setFieldError('email', 'Please enter a valid email address.');
+          ok = false;
+        } else {
+          setFieldError('email', '');
+        }
+        if (!values.role){
+          setFieldError('role', 'Please enter your role.');
+          ok = false;
+        } else {
+          setFieldError('role', '');
+        }
+        if (!values.organization){
+          setFieldError('organization', 'Please enter your organization.');
+          ok = false;
+        } else {
+          setFieldError('organization', '');
+        }
+        return ok;
+      }
+
+      // Clear a field's error as the user edits it
+      form.querySelectorAll('.join-input, .join-textarea').forEach(function(el){
+        el.addEventListener('input', function(){
+          var name = el.getAttribute('name');
+          if (name && ['email','role','organization'].indexOf(name) !== -1){
+            setFieldError(name, '');
+          }
+          generalError.classList.remove('is-shown');
+        });
+      });
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        generalError.classList.remove('is-shown');
+
+        var values = {
+          email: (form.elements['email'].value || '').trim(),
+          role: (form.elements['role'].value || '').trim(),
+          organization: (form.elements['organization'].value || '').trim(),
+          use_case: (form.elements['use_case'].value || '').trim()
+        };
+
+        if (!validate(values)) return;
+
+        // Submitting state
+        submitBtn.disabled = true;
+        btnLabel.textContent = 'Submitting\u2026';
+        if (btnArrow) btnArrow.style.display = 'none';
+
+        fetch(ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(values)
+        }).then(function(res){
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json().catch(function(){ return {}; });
+        }).then(function(){
+          // Success: hide form, show confirmation
+          form.style.display = 'none';
+          confirmEl.classList.add('is-shown');
+        }).catch(function(){
+          // Failure: restore button, show general error
+          submitBtn.disabled = false;
+          btnLabel.textContent = 'Join the Waitlist';
+          if (btnArrow) btnArrow.style.display = '';
+          generalError.classList.add('is-shown');
+        });
+      });
+    })();
+
+    // Mobile nav overlay
+    (function(){
+      var overlay = document.getElementById('nav-overlay');var openBtn = document.getElementById('nav-hamburger');
+      var closeBtn = document.getElementById('nav-overlay-close');
+      var links = overlay.querySelectorAll('[data-overlay-link]');
+
+      function open(){
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden','false');
+        openBtn.setAttribute('aria-expanded','true');
+        document.body.classList.add('nav-open');
+      }
+      function close(){
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden','true');
+        openBtn.setAttribute('aria-expanded','false');
+        document.body.classList.remove('nav-open');
+      }
+
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      links.forEach(function(a){ a.addEventListener('click', close); });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) close();
+      });
+
+      // Auto-close if viewport grows past mobile breakpoint while open
+      var mql = window.matchMedia('(min-width: 992px)');
+      var onChange = function(e){ if (e.matches) close(); };
+      if (mql.addEventListener) mql.addEventListener('change', onChange);
+      else mql.addListener(onChange);
+    })();
+  </script>
+</body>
+</html>
