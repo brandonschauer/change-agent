@@ -1,0 +1,11 @@
+# Dependencies (Node is a local dev-time tool only; the built CSS is committed)
+node_modules/
+**/node_modules/
+
+# OS cruft
+.DS_Store
+**/.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

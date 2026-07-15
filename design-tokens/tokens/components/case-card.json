@@ -1,0 +1,14 @@
+{
+  "case-card": {
+    "width": {
+      "$value": "clamp(240px, 26vw, 320px)",
+      "$type": "dimension",
+      "$description": "Fixed width of one use-case card in the horizontal scroller: 320px above the medium breakpoint (~1024px), scaling down to a 240px floor on the narrowest phones. Width is the only driver — height follows from case-card.aspect-ratio — so every card is identical in size and the ratio holds at every breakpoint. Not mappable to the space scale (which caps at 72px); modeled as a component token, mirroring chat-preview.width."
+    },
+    "aspect-ratio": {
+      "$value": "3 / 4",
+      "$type": "number",
+      "$description": "Portrait aspect ratio (width:height = 3:4) applied to every use-case card. Held constant across all breakpoints so cards only shrink, never re-proportion. Paired with case-card.width, which sets the width the height derives from."
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "color": {
+    "text": {
+      "default":   { "$value": "{color.ink}",       "$type": "color", "$description": "Body text." },
+      "muted":     { "$value": "{color.gray.700}",  "$type": "color", "$description": "Secondary / supporting text." },
+      "on-brand":  { "$value": "{color.white}",     "$type": "color", "$description": "Text on brand/action surfaces." },
+      "on-accent": { "$value": "{color.ink}",       "$type": "color", "$description": "Text on the yellow accent card (re-derived near-black; AA verified on #EEAF00)." },
+      "accent-1": { "$value": "{color.cyan.500}",   "$type": "color", "$description": "Full secondary-accent text paired with surface.soft-1 (card hover reveal 1). NOTE: does not meet AA on soft-1 tint." },
+      "accent-2": { "$value": "{color.lime.500}",   "$type": "color", "$description": "Full secondary-accent text paired with surface.soft-2 (card hover reveal 2). NOTE: does not meet AA on soft-2 tint." },
+      "accent-3": { "$value": "{color.orange.500}", "$type": "color", "$description": "Full secondary-accent text paired with surface.soft-3 (card hover reveal 3). NOTE: does not meet AA on soft-3 tint." },
+      "accent-4": { "$value": "{color.red.500}",    "$type": "color", "$description": "Full secondary-accent text paired with surface.soft-4 (card hover reveal 4). AA passes on soft-4 tint." }
+    },
+    "background": {
+      "default": { "$value": "{color.white}",    "$type": "color", "$description": "Raised cards & surfaces (top tier)." },
+      "subtle":  { "$value": "{color.gray.50}",  "$type": "color", "$description": "Base page canvas (mid tier)." },
+      "muted":   { "$value": "{color.gray.100}", "$type": "color", "$description": "Alternating section bands & neutral control fills (base tier)." }
+    },
+    "surface": {
+      "brand":           { "$value": "{color.green.500}", "$type": "color", "$description": "Hero brand panel." },
+      "brand-strong":    { "$value": "{color.green.700}", "$type": "color", "$description": "Brand hover / dark pair." },
+      "brand-primary":   { "$value": "{color.blue.500}",  "$type": "color", "$description": "Primary blue brand surface — alternate hero panel fill." },
+      "chat-user":    { "$value": "{color.blue.50}",   "$type": "color", "$description": "User chat bubble." },
+      "chat-agent":   { "$value": "{color.white}",     "$type": "color", "$description": "Agent chat surface (white + border to stay distinct from canvas)." },
+      "soft-1": { "$value": "{color.cyan.100}",   "$type": "color", "$description": "Soft decorative surface (secondary-accent tint) — rotating card hover palette 1 of 4." },
+      "soft-2": { "$value": "{color.lime.100}",   "$type": "color", "$description": "Soft decorative surface (secondary-accent tint) — rotating card hover palette 2 of 4." },
+      "soft-3": { "$value": "{color.orange.100}", "$type": "color", "$description": "Soft decorative surface (secondary-accent tint) — rotating card hover palette 3 of 4." },
+      "soft-4": { "$value": "{color.red.100}",    "$type": "color", "$description": "Soft decorative surface (secondary-accent tint) — rotating card hover palette 4 of 4." }
+    },
+    "action": {
+      "primary":       { "$value": "{color.blue.500}", "$type": "color", "$description": "Primary buttons / links." },
+      "primary-hover": { "$value": "{color.blue.600}", "$type": "color", "$description": "Primary hover/active." }
+    },
+    "accent": {
+      "$value": "{color.yellow.500}", "$type": "color", "$description": "Accent — active card, arrows."
+    },
+    "accent-soft": {
+      "$value": "{color.yellow.100}", "$type": "color", "$description": "Soft accent fill."
+    },
+    "border": {
+      "default": { "$value": "{color.gray.200}", "$type": "color", "$description": "Default hairline borders." },
+      "strong":  { "$value": "{color.gray.700}", "$type": "color", "$description": "Emphasized borders / input rules." }
+    },
+    "feedback": {
+      "error": { "$value": "{color.red.500}", "$type": "color", "$description": "Form validation errors." }
+    },
+    "focus": {
+      "ring": { "$value": "{color.blue.500}", "$type": "color", "$description": "Focus-visible outline color." }
+    }
+  }
+}

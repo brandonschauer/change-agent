@@ -1,0 +1,12 @@
+{
+  "size": {
+    "container": { "$value": "1220px", "$type": "dimension", "$description": "Max content width." }
+  },
+  "border": {
+    "width": {
+      "default": { "$value": "1px",   "$type": "dimension", "$description": "Hairline borders." },
+      "strong":  { "$value": "1.5px", "$type": "dimension", "$description": "Input borders." },
+      "focus":   { "$value": "3px",   "$type": "dimension", "$description": "Focus-visible outline." }
+    }
+  }
+}

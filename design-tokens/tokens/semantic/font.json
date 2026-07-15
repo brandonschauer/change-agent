@@ -1,0 +1,11 @@
+{
+  "font": {
+    "family": {
+      "text":    { "$value": "{font.family.source-sans}", "$type": "fontFamily", "$description": "Default text/UI face — body, forms, labels." },
+      "display": { "$value": "{font.family.barlow}",      "$type": "fontFamily", "$description": "Condensed display face — headlines & callouts only." }
+    },
+    "size": {
+      "hero": { "$value": "clamp({font.size.700}, 6vw, {font.size.1000})", "$type": "dimension", "$description": "Fluid hero headline — tracks the viewport through the medium band and below (30px floor → 64px cap), so the headline scales in step with the chat preview." }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "rare-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rare Design System — Core design tokens (DTCG source → Style Dictionary → CSS). Self-contained for Phase 1; structured to extract to a standalone rare-tokens package at Phase 2.",
+  "type": "module",
+  "scripts": {
+    "tokens:build": "style-dictionary build --config sd.config.js"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.0.0"
+  }
+}
