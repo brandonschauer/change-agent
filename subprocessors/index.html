@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sub-processors — Change Agent</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rare-blue:#005BBB; --rare-blue-hover:#004A99; --labs-cyan:#00AFD8;
+    --ink:#1A1A1A; --slate:#5E6A71; --paper:#F4F3EF; --surface:#FFFFFF;
+    --rule:#E3E1DA; --rule-strong:#C9C6BD;
+    --headline:"Barlow Semi Condensed", system-ui, sans-serif;
+    --serif:"Source Sans 3", system-ui, sans-serif;
+    --container:820px; --gutter:24px; --nav-h:64px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:var(--rare-blue);} a:hover{color:var(--rare-blue-hover);}
+  .container{max-width:var(--container);width:100%;margin:0 auto;padding:0 var(--gutter);}
+
+  .nav{position:sticky;top:0;background:var(--surface);height:var(--nav-h);border-bottom:1px solid var(--rule);z-index:10;}
+  .nav-inner{display:flex;align-items:center;height:100%;}
+  .nav-logo img{height:28px;width:auto;display:block;}
+
+  main{padding:56px 0 40px;}
+  .doc h1{font-family:var(--headline);font-weight:800;font-size:2.4rem;line-height:1.1;letter-spacing:-.01em;margin-bottom:.6rem;}
+  .doc h2{font-family:var(--headline);font-weight:700;font-size:1.5rem;margin:2.2rem 0 .7rem;letter-spacing:-.005em;}
+  .doc h3{font-family:var(--headline);font-weight:600;font-size:1.15rem;margin:1.6rem 0 .5rem;}
+  .doc p{margin:0 0 1rem;}
+  .doc ul,.doc ol{margin:0 0 1rem 1.3rem;} .doc li{margin:.3rem 0;}
+  .doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:.05em .35em;}
+  .doc blockquote{border-left:3px solid var(--rare-blue);background:var(--surface);padding:.8rem 1rem;margin:0 0 1.2rem;color:var(--slate);}
+  .doc .effective{color:var(--slate);font-size:.95rem;margin-bottom:1.6rem;}
+  .table-wrap{overflow-x:auto;margin:0 0 1.3rem;}
+  .doc table{border-collapse:collapse;width:100%;font-size:.93rem;background:var(--surface);}
+  .doc th,.doc td{border:1px solid var(--rule);padding:.55rem .7rem;text-align:left;vertical-align:top;}
+  .doc th{background:var(--paper);font-family:var(--headline);font-weight:600;}
+
+  .footer{background:var(--ink);color:#fff;margin-top:48px;padding:36px 0 28px;}
+  .footer a{color:#fff;} .footer-links a{margin-right:20px;text-decoration:none;opacity:.85;}
+  .footer-links a:hover{opacity:1;}
+  .footer-copy{color:#9aa2a8;font-size:.85rem;margin-top:16px;}
+</style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="/" aria-label="Change Agent — Home">
+        <img src="/assets/change-agent-logo-blue.svg" alt="Change Agent" />
+      </a>
+    </div>
+  </nav>
+  <main>
+    <div class="container doc">
+      <h1>Sub-processors</h1>
+      <p class="effective"><strong>Last updated:</strong> July 15, 2026</p>
+<p>We use the following sub-processors to provide Change Agent. Each processes personal data only on our instructions, under a data-processing agreement, and only as needed for its stated purpose. Region/transfer details should be confirmed against each provider's current documentation and your account configuration.</p>
+<div class="table-wrap"><table><thead><tr><th>Sub-processor</th><th>Purpose</th><th>Personal data processed</th><th>Location</th></tr></thead><tbody><tr><td><strong>WorkOS</strong></td><td>Authentication, SSO, MFA</td><td>Identity (email, name, auth identifiers)</td><td>US</td></tr><tr><td><strong>Supabase</strong></td><td>Application database (users, conversation metadata, sessions, usage events, feedback)</td><td>Identity, conversation metadata, usage, feedback (incl. screenshots)</td><td>US East (AWS us-east-1, N. Virginia)</td></tr><tr><td><strong>OpenRouter</strong></td><td>LLM request routing</td><td>Prompts + responses (transient; not retained/trained per account config)</td><td>US</td></tr><tr><td><strong>Google (Gemini via Vertex AI)</strong></td><td>Primary language model</td><td>Prompts + responses</td><td>US / EU / Global (OpenRouter-routed; not pinned)</td></tr><tr><td><strong>Meta (Llama)</strong></td><td>Evaluation-tier language model</td><td>Prompts + responses (when used)</td><td>US</td></tr><tr><td><strong>OpenAI</strong></td><td>Text embeddings</td><td>Search query text</td><td>US</td></tr><tr><td><strong>LangChain — LangGraph Platform</strong></td><td>Agent orchestration; stores conversation state/checkpoints</td><td>Prompts + responses (conversation state)</td><td>US (GCP)</td></tr><tr><td><strong>LangChain — LangSmith</strong></td><td>Observability / tracing</td><td>Prompts + responses (traces)</td><td>US (GCP, us-central-1)</td></tr><tr><td><strong>Vercel</strong></td><td>Frontend hosting / edge</td><td>Request metadata (IP, user-agent); no conversation content stored</td><td>US East (Vercel iad1)</td></tr><tr><td><strong>Neo4j Aura</strong></td><td>Knowledge-base graph (read-only at request time)</td><td>None user-identifiable (queries only; no user content stored)</td><td>US (GCP us-east1, South Carolina)</td></tr></tbody></table></div>
+<h3>Notes</h3>
+<ul><li><strong>No training on user data:</strong> providers are operated in no-training configurations (routing configured to exclude training endpoints; primary model under enterprise terms). See the Privacy Policy §3.</li><li><strong>Encryption:</strong> all transfers over TLS; data encrypted at rest (AES-256 in Neo4j Aura / Supabase; encryption-at-rest attested under LangChain's SOC 2 Type II).</li><li><strong>Cross-border transfers:</strong> US-located sub-processors are covered by SCCs and/or EU-US Data Privacy Framework certification — tracked in <code>DPA_SCC_TRACKER.md</code>.</li><li>This list is maintained as sub-processors change; subscribe at https://forms.microsoft.com/r/QWP6JcXRK2 for advance notice.</li></ul>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/subprocessors/">Sub-processors</a>
+        <a href="https://rare.org" target="_blank" rel="noopener">Created by Rare</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Rare. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
