@@ -244,8 +244,9 @@
   }
   .chat-track{padding:1.22em}
   .chat-msg{border-radius:.67em;padding:.89em 1em;margin-bottom:.78em}
-  .chat-msg--user{background:var(--rare-color-surface-chat-user)}
-  .chat-msg--agent{background:transparent;padding-inline:.22em}
+  /* Asymmetric outer spacing fakes conversational alignment: user box pushed right (whitespace at its left), agent pulled left */
+  .chat-msg--user{background:var(--rare-color-surface-chat-user);margin-inline-start:2em}
+  .chat-msg--agent{background:transparent;padding-inline:.22em;margin-inline-end:2em}
   .chat-msg p{margin-bottom:.56em}
   .chat-msg p:last-child{margin-bottom:0}
   .chat-msg ol,
