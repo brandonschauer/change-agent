@@ -1,6 +1,7 @@
 {
   "size": {
-    "container": { "$value": "1220px", "$type": "dimension", "$description": "Max content width." }
+    "container": { "$value": "1220px", "$type": "dimension", "$description": "Max content width — app/marketing surfaces." },
+    "container-narrow": { "$value": "820px", "$type": "dimension", "$description": "Max width for long-form reading columns (legal/policy pages)." }
   },
   "border": {
     "width": {

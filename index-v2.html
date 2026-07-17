@@ -377,6 +377,7 @@
     border-radius:var(--rare-radius-card);
     padding:var(--rare-space-5);
     display:flex;flex-direction:column;
+    overflow:hidden; /* clip the flush bottom-left reveal image to the rounded corner */
     transition:background var(--rare-motion-duration-fast) var(--rare-motion-easing-standard);
   }
   /* Rollover: each card fills with a distinct muted secondary-accent surface.
@@ -411,6 +412,22 @@
   .case-card:nth-child(3) .case-reveal{color:var(--rare-color-text-accent-3)}
   .case-card:nth-child(4) .case-reveal{color:var(--rare-color-text-accent-4)}
   .case-card:hover .case-reveal{opacity:1}
+  /* Rollover illustration: fades in flush to the card's bottom-left corner
+     (ignores the card padding) and sits behind the text. Decorative. */
+  .case-media{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:61.2%; /* 10% smaller than the original 68% */
+    height:auto;
+    opacity:0;
+    z-index:0;
+    pointer-events:none;
+    transition:opacity var(--rare-motion-duration-fast) var(--rare-motion-easing-standard);
+  }
+  .case-card:hover .case-media{opacity:1}
+  /* Keep text above the illustration. */
+  .case-card > :where(.case-title, .case-desc, .case-reveal){position:relative;z-index:1}
 
   .cases-controls{
     display:flex;align-items:center;justify-content:flex-end;
@@ -718,21 +735,25 @@
             <h3 class="case-title">Idea Hunt</h3>
             <p class="case-desc">Find the breakthrough ideas drawn from across sectors.</p>
             <p class="case-reveal">You’re familiar with approaches in your field, so the game changing idea might be electrification, personal finance, healthcare, or advocacy.</p>
+            <img class="case-media" src="assets/case-card-idea-hunt.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           </li>
           <li class="case-card">
             <h3 class="case-title">Intervention Critique</h3>
             <p class="case-desc">Improve your design so your next steps have impact.</p>
             <p class="case-reveal">A complementary idea fitting your audience and resources might overcome the obstacles that hold back change.</p>
+            <img class="case-media" src="assets/case-card-intervention-critique.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           </li>
           <li class="case-card">
             <h3 class="case-title">Workshop Anchor</h3>
             <p class="case-desc">Keep your team's design decisions grounded in evidence.</p>
             <p class="case-reveal">Generate a stream of ideas while staying grounded in behavioral science.</p>
+            <img class="case-media" src="assets/case-card-workshop-anchor.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           </li>
           <li class="case-card">
             <h3 class="case-title">The Kickoff</h3>
             <p class="case-desc">Start a new project with a shared, evidence-based footing.</p>
             <p class="case-reveal">Amass research and evidence-based intervention concepts that address the behavior change challenges you face.</p>
+            <img class="case-media" src="assets/case-card-the-kickoff.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           </li>
         </ul>
       </div>
@@ -809,8 +830,8 @@
         </p>
       </div>
       <ul class="footer-links">
-        <li><a href="#">Privacy policy</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="/privacy/">Privacy policy</a></li>
+        <li><a href="/subprocessors/">Sub-processors</a></li>
       </ul>
     </div>
     <div class="footer-legal">

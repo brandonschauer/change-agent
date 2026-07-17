@@ -36,7 +36,8 @@
   --rare-radius-card: 14px; /** Cards / chat panel — preserves v2's 14px. */
   --rare-radius-xl: 22px; /** Large hero panel. */
   --rare-radius-pill: 9999px; /** Circular / pill controls. */
-  --rare-size-container: 1220px; /** Max content width. */
+  --rare-size-container: 1220px; /** Max content width — app/marketing surfaces. */
+  --rare-size-container-narrow: 820px; /** Max width for long-form reading columns (legal/policy pages). */
   --rare-border-width-default: 1px; /** Hairline borders. */
   --rare-border-width-strong: 1.5px; /** Input borders. */
   --rare-border-width-focus: 3px; /** Focus-visible outline. */
