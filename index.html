@@ -418,7 +418,9 @@
     position:absolute;
     left:0;
     bottom:0;
-    width:61.2%; /* 10% smaller than the original 68% */
+    /* Sized to clear the longest reveal copy on the smallest still-shown card
+       (~267px at the 1025px breakpoint); larger cards get more clearance. */
+    width:40%;
     height:auto;
     opacity:0;
     z-index:0;
@@ -426,6 +428,10 @@
     transition:opacity var(--rare-motion-duration-fast) var(--rare-motion-easing-standard);
   }
   .case-card:hover .case-media{opacity:1}
+  /* Below the wide breakpoint the cards hit their 240px floor, where the reveal
+     text fills the card and would collide with the image — so drop the image and
+     let the text stand alone. (display:none also skips the lazy fetch.) */
+  @media (max-width:1024px){ .case-media{display:none} }
   /* Keep text above the illustration. */
   .case-card > :where(.case-title, .case-desc, .case-reveal){position:relative;z-index:1}
 
