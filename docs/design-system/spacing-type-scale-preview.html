@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rare Design System — Spacing & Type Scale Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* --- Color primitives (from brand guide) --- */
+    --rare-color-blue-500: #005BBB;
+    --rare-color-green-500: #008542;
+    --rare-color-gray-700: #5E6A71;
+    --rare-color-ink: #1a1d1f;
+    --rare-color-bg: #ffffff;
+    --rare-color-bg-subtle: #f4f6f8;
+    --rare-color-border: #dde3e8;
+
+    /* --- Font families (Phase 0 selections) --- */
+    --rare-font-family-text: "Source Sans 3", Arial, system-ui, sans-serif;
+    --rare-font-family-display: "Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif;
+
+    /* --- Spacing scale · 4px base (space.0 – space.10) --- */
+    --rare-space-0: 0px;
+    --rare-space-1: 4px;
+    --rare-space-2: 8px;
+    --rare-space-3: 12px;
+    --rare-space-4: 16px;
+    --rare-space-5: 20px;
+    --rare-space-6: 24px;
+    --rare-space-7: 32px;
+    --rare-space-8: 40px;
+    --rare-space-9: 48px;
+    --rare-space-10: 64px;
+
+    /* --- Type scale · 8 steps (font.size.100 – .800), 16px base --- */
+    --rare-font-size-100: 0.75rem;   /* 12px */
+    --rare-font-size-200: 0.875rem;  /* 14px */
+    --rare-font-size-300: 1rem;      /* 16px */
+    --rare-font-size-400: 1.125rem;  /* 18px */
+    --rare-font-size-500: 1.25rem;   /* 20px */
+    --rare-font-size-600: 1.5rem;    /* 24px */
+    --rare-font-size-700: 1.875rem;  /* 30px */
+    --rare-font-size-800: 2.5rem;    /* 40px */
+
+    /* --- Line heights & weights --- */
+    --rare-line-tight: 1.1;
+    --rare-line-normal: 1.5;
+    --rare-line-relaxed: 1.65;
+    --rare-weight-regular: 400;
+    --rare-weight-semibold: 600;
+    --rare-weight-bold: 700;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--rare-color-bg);
+    color: var(--rare-color-ink);
+    font-family: var(--rare-font-family-text);
+    font-size: var(--rare-font-size-300);
+    line-height: var(--rare-line-normal);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: var(--rare-space-9) var(--rare-space-6); }
+
+  /* Header */
+  .masthead { border-bottom: 4px solid var(--rare-color-blue-500); padding-bottom: var(--rare-space-6); margin-bottom: var(--rare-space-9); }
+  .eyebrow { font-family: var(--rare-font-family-display); text-transform: uppercase; letter-spacing: .08em;
+    color: var(--rare-color-blue-500); font-weight: var(--rare-weight-700); font-size: var(--rare-font-size-200); margin: 0 0 var(--rare-space-2); }
+  h1 { font-family: var(--rare-font-family-display); font-weight: var(--rare-weight-bold); font-size: var(--rare-font-size-800);
+    line-height: var(--rare-line-tight); margin: 0 0 var(--rare-space-3); }
+  .lede { font-size: var(--rare-font-size-400); color: var(--rare-color-gray-700); margin: 0; max-width: 60ch; }
+
+  section { margin-bottom: var(--rare-space-10); }
+  h2 { font-family: var(--rare-font-family-display); font-size: var(--rare-font-size-700); line-height: var(--rare-line-tight);
+    margin: 0 0 var(--rare-space-2); }
+  .section-note { color: var(--rare-color-gray-700); margin: 0 0 var(--rare-space-6); max-width: 68ch; }
+
+  /* Controls */
+  .controls { display: flex; gap: var(--rare-space-2); align-items: center; margin-bottom: var(--rare-space-5); flex-wrap: wrap; }
+  .controls span { font-size: var(--rare-font-size-200); color: var(--rare-color-gray-700); margin-right: var(--rare-space-1); }
+  button.toggle { font-family: var(--rare-font-family-text); font-size: var(--rare-font-size-200); font-weight: var(--rare-weight-semibold);
+    padding: var(--rare-space-2) var(--rare-space-4); border: 1px solid var(--rare-color-border); background: #fff; color: var(--rare-color-ink);
+    border-radius: 999px; cursor: pointer; }
+  button.toggle[aria-pressed="true"] { background: var(--rare-color-blue-500); border-color: var(--rare-color-blue-500); color: #fff; }
+
+  /* Type scale rows */
+  .type-row { display: grid; grid-template-columns: 160px 1fr; gap: var(--rare-space-5); align-items: baseline;
+    padding: var(--rare-space-4) 0; border-top: 1px solid var(--rare-color-border); }
+  .type-meta code { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--rare-font-size-200);
+    color: var(--rare-color-blue-500); }
+  .type-meta small { color: var(--rare-color-gray-700); font-size: var(--rare-font-size-100); }
+  .type-sample { line-height: var(--rare-line-tight); }
+  .s100 { font-size: var(--rare-font-size-100); } .s200 { font-size: var(--rare-font-size-200); }
+  .s300 { font-size: var(--rare-font-size-300); line-height: var(--rare-line-normal); } .s400 { font-size: var(--rare-font-size-400); line-height: var(--rare-line-normal); }
+  .s500 { font-size: var(--rare-font-size-500); } .s600 { font-size: var(--rare-font-size-600); }
+  .s700 { font-size: var(--rare-font-size-700); } .s800 { font-size: var(--rare-font-size-800); }
+  body.show-display .type-sample { font-family: var(--rare-font-family-display); }
+
+  /* Spacing scale */
+  .space-row { display: grid; grid-template-columns: 150px 1fr; gap: var(--rare-space-5); align-items: center;
+    padding: var(--rare-space-2) 0; }
+  .space-meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--rare-font-size-200); color: var(--rare-color-blue-500); }
+  .space-meta small { color: var(--rare-color-gray-700); font-size: var(--rare-font-size-100); margin-left: var(--rare-space-2); }
+  .bar { height: 16px; background: var(--rare-color-green-500); border-radius: 2px; }
+
+  /* Applied example */
+  .demo-card { border: 1px solid var(--rare-color-border); border-radius: 8px; overflow: hidden; max-width: 420px; }
+  .demo-card .band { height: var(--rare-space-2); background: var(--rare-color-blue-500); }
+  .demo-body { padding: var(--rare-space-7); }
+  .demo-tag { font-family: var(--rare-font-family-display); text-transform: uppercase; letter-spacing: .06em;
+    font-size: var(--rare-font-size-200); font-weight: var(--rare-weight-bold); color: var(--rare-color-green-500); margin: 0 0 var(--rare-space-3); }
+  .demo-body h3 { font-family: var(--rare-font-family-display); font-size: var(--rare-font-size-600); line-height: var(--rare-line-tight); margin: 0 0 var(--rare-space-3); }
+  .demo-body p { margin: 0 0 var(--rare-space-6); color: var(--rare-color-gray-700); }
+  .demo-body a.btn { display: inline-block; background: var(--rare-color-blue-500); color: #fff; text-decoration: none;
+    font-weight: var(--rare-weight-semibold); padding: var(--rare-space-3) var(--rare-space-6); border-radius: 6px; }
+  .demo-annot { font-size: var(--rare-font-size-100); color: var(--rare-color-gray-700); margin-top: var(--rare-space-4); }
+  .demo-annot code { color: var(--rare-color-blue-500); }
+
+  .legend { display: flex; gap: var(--rare-space-6); flex-wrap: wrap; margin-top: var(--rare-space-4);
+    font-size: var(--rare-font-size-200); color: var(--rare-color-gray-700); }
+  .footer { border-top: 1px solid var(--rare-color-border); padding-top: var(--rare-space-5); margin-top: var(--rare-space-10);
+    font-size: var(--rare-font-size-200); color: var(--rare-color-gray-700); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Rare Design System · Phase 0 preview</p>
+    <h1>Spacing &amp; Type Scale</h1>
+    <p class="lede">A working preview of the proposed <strong>4px spacing base</strong> and <strong>8-step type scale</strong>,
+    rendered in the Phase 0 web fonts — Source Sans 3 (text/UI) and Barlow Semi Condensed (display). Token names shown are
+    the Style Dictionary CSS custom properties.</p>
+  </header>
+
+  <section>
+    <h2>Type scale — 8 steps</h2>
+    <p class="section-note">A modular ramp from 12px to 40px on a 16px base, named <code>font.size.100</code>–<code>.800</code>.
+    Steps 100–500 are the text/UI range (Source Sans 3); 600–800 are the display range (Barlow Semi Condensed).
+    Toggle the preview font to judge each face across the scale.</p>
+
+    <div class="controls">
+      <span>Preview font:</span>
+      <button class="toggle" id="btn-text" aria-pressed="true" onclick="setFont('text')">Source Sans 3 (text)</button>
+      <button class="toggle" id="btn-display" aria-pressed="false" onclick="setFont('display')">Barlow Semi Condensed (display)</button>
+    </div>
+
+    <div class="type-list">
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-800</code><small>2.5rem · 40px · role: display / H1</small></div><div class="type-sample s800">Inspiring change so people and nature thrive</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-700</code><small>1.875rem · 30px · role: H2</small></div><div class="type-sample s700">Inspiring change so people and nature thrive</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-600</code><small>1.5rem · 24px · role: H3</small></div><div class="type-sample s600">Inspiring change so people and nature thrive</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-500</code><small>1.25rem · 20px · role: H4 / subtitle</small></div><div class="type-sample s500">Inspiring change so people and nature thrive</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-400</code><small>1.125rem · 18px · role: lead / large body</small></div><div class="type-sample s400">Inspiring change so people and nature thrive, through the cumulative power of individual action.</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-300</code><small>1rem · 16px · role: body (base)</small></div><div class="type-sample s300">Inspiring change so people and nature thrive, through the cumulative power of individual action across shared waters, lands, and climate.</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-200</code><small>0.875rem · 14px · role: small / UI</small></div><div class="type-sample s200">Inspiring change so people and nature thrive, through the cumulative power of individual action.</div></div>
+      <div class="type-row"><div class="type-meta"><code>--rare-font-size-100</code><small>0.75rem · 12px · role: caption / fine print</small></div><div class="type-sample s100">Inspiring change so people and nature thrive, through the cumulative power of individual action.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Spacing scale — 4px base</h2>
+    <p class="section-note">Eleven steps, <code>space.0</code>–<code>space.10</code>, every value a multiple of 4px. Tight steps (4–24px) for
+    component padding and gaps; larger jumps (32–64px) for section rhythm. Bars below are drawn at true size.</p>
+
+    <div class="space-list">
+      <div class="space-row"><div class="space-meta"><code>--rare-space-1</code><small>4px</small></div><div class="bar" style="width: var(--rare-space-1)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-2</code><small>8px</small></div><div class="bar" style="width: var(--rare-space-2)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-3</code><small>12px</small></div><div class="bar" style="width: var(--rare-space-3)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-4</code><small>16px</small></div><div class="bar" style="width: var(--rare-space-4)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-5</code><small>20px</small></div><div class="bar" style="width: var(--rare-space-5)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-6</code><small>24px</small></div><div class="bar" style="width: var(--rare-space-6)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-7</code><small>32px</small></div><div class="bar" style="width: var(--rare-space-7)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-8</code><small>40px</small></div><div class="bar" style="width: var(--rare-space-8)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-9</code><small>48px</small></div><div class="bar" style="width: var(--rare-space-9)"></div></div>
+      <div class="space-row"><div class="space-meta"><code>--rare-space-10</code><small>64px</small></div><div class="bar" style="width: var(--rare-space-10)"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Both scales, applied</h2>
+    <p class="section-note">A use-case card built entirely from the tokens above, so you can see the type and spacing rhythm
+    working together the way a real Change Agent component would.</p>
+
+    <div class="demo-card">
+      <div class="band"></div>
+      <div class="demo-body">
+        <p class="demo-tag">Behavior change</p>
+        <h3>Turn intention into measurable local action</h3>
+        <p>Give your community the nudges, tools, and evidence to protect the waters and lands they depend on.</p>
+        <a class="btn" href="#" onclick="return false;">Join the waitlist</a>
+        <p class="demo-annot">Uses <code>space.7</code> inset · <code>space.3</code>/<code>space.6</code> vertical rhythm ·
+        <code>font.size.600</code> heading · <code>font.size.300</code> body.</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span>■ <span style="color:var(--rare-color-blue-500)">Rare Blue #005BBB</span></span>
+      <span>■ <span style="color:var(--rare-color-green-500)">Rare Green #008542</span></span>
+      <span>■ <span style="color:var(--rare-color-gray-700)">Rare Gray #5E6A71</span></span>
+    </div>
+  </section>
+
+  <p class="footer">Provisional Phase 0 values for evaluation only — not yet authored as DTCG tokens. Change the base or any step
+  in <code>:root</code> to test alternatives. Fonts loaded from Google Fonts CDN per the Phase 0 hosting decision.</p>
+
+</div>
+
+<script>
+  function setFont(mode) {
+    var display = mode === 'display';
+    document.body.classList.toggle('show-display', display);
+    document.getElementById('btn-display').setAttribute('aria-pressed', display ? 'true' : 'false');
+    document.getElementById('btn-text').setAttribute('aria-pressed', display ? 'false' : 'true');
+  }
+</script>
+</body>
+</html>
