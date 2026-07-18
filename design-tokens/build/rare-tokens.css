@@ -7,24 +7,23 @@
   --rare-case-card-aspect-ratio: 3 / 4; /** Portrait aspect ratio (width:height = 3:4) applied to every use-case card. Held constant across all breakpoints so cards only shrink, never re-proportion. Paired with case-card.width, which sets the width the height derives from. */
   --rare-chat-preview-width: clamp(420px, 52.8vw, 540px); /** Fluid width of the hero chat-preview card (and its two-column grid track): 540px max above the medium breakpoint (~1024px), scaling down to a 420px floor through the medium band; capped to 100% on the narrowest phones. Kept in lockstep with chat-preview.font (30x ratio) so the card zooms as one unit. */
   --rare-color-blue-50: #e6f1fb; /** Rare Blue tint — chat-user surface, subtle blue fills. */
-  --rare-color-blue-500: #005bbb; /** Rare Blue — primary brand action color. */
+  --rare-color-blue-500: #005bbb; /** Rare Blue — primary brand action color & hero brand surface. */
   --rare-color-blue-600: #00499a; /** Rare Blue shade — primary action hover/active. */
-  --rare-color-green-500: #008542; /** Rare Green — brand surface (hero). */
-  --rare-color-green-700: #006b35; /** Rare Green shade — brand-strong surface / hover pair. */
   --rare-color-gray-50: #f4f6f8; /** Neutral 50 — base page canvas. */
   --rare-color-gray-100: #e9edf1; /** Neutral 100 — alternating section band / muted control fill. */
   --rare-color-gray-200: #dde3e8; /** Neutral 200 — default borders / hairlines. */
   --rare-color-gray-700: #5e6a71; /** Rare Gray — muted text and strong borders. */
-  --rare-color-yellow-100: #fbefc2; /** Accent yellow tint — soft accent fills. */
-  --rare-color-yellow-500: #eeaf00; /** Rare accent yellow — active use-case card. */
   --rare-color-red-100: #f7e8ed; /** Secondary accent red tint — soft decorative surface. */
-  --rare-color-red-500: #aa1948; /** Secondary accent — error/feedback. */
+  --rare-color-red-500: #aa1948; /** Secondary accent — error/feedback; AA-safe reveal ink on its own tint. */
   --rare-color-cyan-100: #e0f5fa; /** Secondary accent cyan tint — soft decorative surface. */
   --rare-color-cyan-500: #00afd8; /** Secondary accent — light blue. */
+  --rare-color-cyan-700: #08627a; /** Secondary accent cyan shade — AA-safe reveal ink on cyan.100 (6.1:1). */
   --rare-color-orange-100: #fef0e7; /** Secondary accent orange tint — soft decorative surface. */
   --rare-color-orange-500: #f58233; /** Secondary accent — orange. */
+  --rare-color-orange-700: #a34d17; /** Secondary accent orange shade — AA-safe reveal ink on orange.100 (5.2:1). */
   --rare-color-lime-100: #eff7e0; /** Secondary accent lime tint — soft decorative surface. */
   --rare-color-lime-500: #7ab800; /** Secondary accent — bright green. */
+  --rare-color-lime-700: #4a6b00; /** Secondary accent lime shade — AA-safe reveal ink on lime.100 (5.6:1). */
   --rare-color-white: #ffffff; /** Pure white — raised surfaces, on-brand text. */
   --rare-color-ink: #1a1d1f; /** Near-black ink — default body text. */
   --rare-motion-duration-fast: 150ms; /** Hover/color transitions. */
@@ -55,18 +54,15 @@
   --rare-space-11: 72px;
   --rare-font-family-source-sans: "Source Sans 3", Arial, system-ui, sans-serif; /** Text/UI primitive stack. Prepend licensed "Univers Next" here to swap; nothing downstream names a font. */
   --rare-font-family-barlow: "Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif; /** Condensed display primitive stack. Prepend licensed "PF Square Sans" here to swap. */
-  --rare-font-size-100: 0.75rem; /** 12px */
   --rare-font-size-200: 0.875rem; /** 14px */
   --rare-font-size-300: 1rem; /** 16px */
   --rare-font-size-400: 1.125rem; /** 18px — body copy */
   --rare-font-size-500: 1.25rem; /** 20px */
   --rare-font-size-600: 1.5rem; /** 24px */
   --rare-font-size-700: 1.875rem; /** 30px */
-  --rare-font-size-800: 2.5rem; /** 40px */
   --rare-font-size-900: 3rem; /** 48px — display */
   --rare-font-size-1000: 4rem; /** 64px — hero display */
   --rare-font-weight-regular: 400;
-  --rare-font-weight-medium: 500;
   --rare-font-weight-semibold: 600;
   --rare-font-weight-bold: 700;
   --rare-font-weight-extrabold: 800; /** Display-heavy — Barlow hero headline. */
@@ -77,27 +73,14 @@
   --rare-color-text-default: var(--rare-color-ink); /** Body text. */
   --rare-color-text-muted: var(--rare-color-gray-700); /** Secondary / supporting text. */
   --rare-color-text-on-brand: var(--rare-color-white); /** Text on brand/action surfaces. */
-  --rare-color-text-on-accent: var(--rare-color-ink); /** Text on the yellow accent card (re-derived near-black; AA verified on #EEAF00). */
-  --rare-color-text-accent-1: var(--rare-color-cyan-500); /** Full secondary-accent text paired with surface.soft-1 (card hover reveal 1). NOTE: does not meet AA on soft-1 tint. */
-  --rare-color-text-accent-2: var(--rare-color-lime-500); /** Full secondary-accent text paired with surface.soft-2 (card hover reveal 2). NOTE: does not meet AA on soft-2 tint. */
-  --rare-color-text-accent-3: var(--rare-color-orange-500); /** Full secondary-accent text paired with surface.soft-3 (card hover reveal 3). NOTE: does not meet AA on soft-3 tint. */
-  --rare-color-text-accent-4: var(--rare-color-red-500); /** Full secondary-accent text paired with surface.soft-4 (card hover reveal 4). AA passes on soft-4 tint. */
   --rare-color-background-default: var(--rare-color-white); /** Raised cards & surfaces (top tier). */
   --rare-color-background-subtle: var(--rare-color-gray-50); /** Base page canvas (mid tier). */
   --rare-color-background-muted: var(--rare-color-gray-100); /** Alternating section bands & neutral control fills (base tier). */
-  --rare-color-surface-brand: var(--rare-color-green-500); /** Hero brand panel. */
-  --rare-color-surface-brand-strong: var(--rare-color-green-700); /** Brand hover / dark pair. */
-  --rare-color-surface-brand-primary: var(--rare-color-blue-500); /** Primary blue brand surface — alternate hero panel fill. */
+  --rare-color-surface-brand: var(--rare-color-blue-500); /** Hero brand panel (Rare Blue). */
   --rare-color-surface-chat-user: var(--rare-color-blue-50); /** User chat bubble. */
   --rare-color-surface-chat-agent: var(--rare-color-white); /** Agent chat surface (white + border to stay distinct from canvas). */
-  --rare-color-surface-soft-1: var(--rare-color-cyan-100); /** Soft decorative surface (secondary-accent tint) — rotating card hover palette 1 of 4. */
-  --rare-color-surface-soft-2: var(--rare-color-lime-100); /** Soft decorative surface (secondary-accent tint) — rotating card hover palette 2 of 4. */
-  --rare-color-surface-soft-3: var(--rare-color-orange-100); /** Soft decorative surface (secondary-accent tint) — rotating card hover palette 3 of 4. */
-  --rare-color-surface-soft-4: var(--rare-color-red-100); /** Soft decorative surface (secondary-accent tint) — rotating card hover palette 4 of 4. */
   --rare-color-action-primary: var(--rare-color-blue-500); /** Primary buttons / links. */
   --rare-color-action-primary-hover: var(--rare-color-blue-600); /** Primary hover/active. */
-  --rare-color-accent: var(--rare-color-yellow-500); /** Accent — active card, arrows. */
-  --rare-color-accent-soft: var(--rare-color-yellow-100); /** Soft accent fill. */
   --rare-color-border-default: var(--rare-color-gray-200); /** Default hairline borders. */
   --rare-color-border-strong: var(--rare-color-gray-700); /** Emphasized borders / input rules. */
   --rare-color-feedback-error: var(--rare-color-red-500); /** Form validation errors. */
