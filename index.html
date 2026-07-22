@@ -170,7 +170,10 @@
     font-family:var(--rare-font-family-display);
     font-weight:var(--rare-font-weight-extrabold);
     color:var(--rare-color-text-on-brand);
-    font-size:var(--rare-font-size-hero);
+    /* Fluid hero sizing is PAGE COMPOSITION, not a token: the 6vw interpolation is
+       only correct because this headline spans the full-width hero panel. The tokens
+       supply the role bounds (floor → cap); this rule supplies the viewport behaviour. */
+    font-size:clamp(var(--rare-font-size-hero-min), 6vw, var(--rare-font-size-hero));
     line-height:var(--rare-line-height-tight);
     letter-spacing:-.01em;
   }
