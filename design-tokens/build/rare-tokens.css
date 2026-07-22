@@ -28,6 +28,11 @@
   --rare-color-yellow-500: #eeaf00; /** Rare Yellow — brand-guide SECONDARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface. */
   --rare-color-white: #ffffff; /** Pure white — raised surfaces, on-brand text. */
   --rare-color-ink: #1a1d1f; /** Near-black ink — default body text. */
+  --rare-elevation-z-base: 0; /** Ground plane — decorative fills and background media that must sit behind their own container's content. */
+  --rare-elevation-z-raised: 1; /** Lifted above sibling background media within the same component — e.g. card text over a card illustration. */
+  --rare-elevation-z-sticky: 2; /** Pinned affordance inside a scrolling container — scroll hints, in-card overlays. Above component content, below any page-level overlay. */
+  --rare-elevation-z-overlay: 20; /** Full-surface overlay that covers page content — the mobile navigation panel, drawers, scrims. */
+  --rare-elevation-z-modal: 30; /** Sits above an overlay — dialog chrome and the controls that must stay reachable while an overlay is open (e.g. the close button and logo over the mobile menu). */
   --rare-motion-duration-fast: 150ms; /** Hover/color transitions. */
   --rare-motion-duration-base: 200ms; /** Accordion / transform transitions. */
   --rare-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1); /** Standard ease. */
@@ -39,9 +44,12 @@
   --rare-radius-pill: 9999px; /** Circular / pill controls. */
   --rare-size-container: 1220px; /** Max content width — app/marketing surfaces. */
   --rare-size-container-narrow: 820px; /** Max width for long-form reading columns (legal/policy pages). */
+  --rare-size-control-sm: 28px; /** Small square/circular control box — step badges, compact icon targets. A control DIMENSION, not spacing: it sizes a box rather than the gap around one, so it lives on the size scale rather than the 4px space ramp. */
+  --rare-size-control-md: 40px; /** Medium square control box — icon buttons, carousel arrows. Meets the 40px minimum comfortable pointer target. */
   --rare-border-width-default: 1px; /** Hairline borders. */
-  --rare-border-width-strong: 1.5px; /** Input borders. */
+  --rare-border-width-strong: 1.5px; /** Input borders. INTENTIONALLY off the 4px grid: the 4px grid governs SPACING (gaps, insets, rhythm), not stroke weights. Hairline-class strokes are their own concern and legitimately land on sub-grid values — 1.5px is the deliberate mid-step between the 1px hairline and a 2px heavy rule. Not a defect; do not 'normalize' this to 1px or 2px. */
   --rare-border-width-focus: 3px; /** Focus-visible outline. */
+  --rare-border-offset-focus: 2px; /** Gap between a focus ring and the element it outlines. Pairs with border.width.focus so focus treatment is fully tokenized and stays consistent across every consumer (a11y-critical: focus affordances must not drift per-surface). */
   --rare-space-0: 0;
   --rare-space-1: 4px;
   --rare-space-2: 8px;
