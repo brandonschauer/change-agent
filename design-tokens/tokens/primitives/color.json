@@ -5,6 +5,9 @@
       "500": { "$value": "#005BBB", "$type": "color", "$description": "Rare Blue — primary brand action color & hero brand surface." },
       "600": { "$value": "#00499A", "$type": "color", "$description": "Rare Blue shade — primary action hover/active." }
     },
+    "green": {
+      "500": { "$value": "#008542", "$type": "color", "$description": "Rare Green — brand-guide PRIMARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface." }
+    },
     "gray": {
       "50":  { "$value": "#F4F6F8", "$type": "color", "$description": "Neutral 50 — base page canvas." },
       "100": { "$value": "#E9EDF1", "$type": "color", "$description": "Neutral 100 — alternating section band / muted control fill." },
@@ -29,6 +32,9 @@
       "100": { "$value": "#EFF7E0", "$type": "color", "$description": "Secondary accent lime tint — soft decorative surface." },
       "500": { "$value": "#7AB800", "$type": "color", "$description": "Secondary accent — bright green." },
       "700": { "$value": "#4A6B00", "$type": "color", "$description": "Secondary accent lime shade — AA-safe reveal ink on lime.100 (5.6:1)." }
+    },
+    "yellow": {
+      "500": { "$value": "#EEAF00", "$type": "color", "$description": "Rare Yellow — brand-guide SECONDARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface." }
     },
     "white":  { "$value": "#FFFFFF", "$type": "color", "$description": "Pure white — raised surfaces, on-brand text." },
     "ink":    { "$value": "#1A1D1F", "$type": "color", "$description": "Near-black ink — default body text." }

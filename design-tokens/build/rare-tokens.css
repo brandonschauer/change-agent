@@ -9,6 +9,7 @@
   --rare-color-blue-50: #e6f1fb; /** Rare Blue tint — chat-user surface, subtle blue fills. */
   --rare-color-blue-500: #005bbb; /** Rare Blue — primary brand action color & hero brand surface. */
   --rare-color-blue-600: #00499a; /** Rare Blue shade — primary action hover/active. */
+  --rare-color-green-500: #008542; /** Rare Green — brand-guide PRIMARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface. */
   --rare-color-gray-50: #f4f6f8; /** Neutral 50 — base page canvas. */
   --rare-color-gray-100: #e9edf1; /** Neutral 100 — alternating section band / muted control fill. */
   --rare-color-gray-200: #dde3e8; /** Neutral 200 — default borders / hairlines. */
@@ -24,6 +25,7 @@
   --rare-color-lime-100: #eff7e0; /** Secondary accent lime tint — soft decorative surface. */
   --rare-color-lime-500: #7ab800; /** Secondary accent — bright green. */
   --rare-color-lime-700: #4a6b00; /** Secondary accent lime shade — AA-safe reveal ink on lime.100 (5.6:1). */
+  --rare-color-yellow-500: #eeaf00; /** Rare Yellow — brand-guide SECONDARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface. */
   --rare-color-white: #ffffff; /** Pure white — raised surfaces, on-brand text. */
   --rare-color-ink: #1a1d1f; /** Near-black ink — default body text. */
   --rare-motion-duration-fast: 150ms; /** Hover/color transitions. */
