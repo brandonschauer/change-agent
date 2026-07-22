@@ -1,6 +1,6 @@
 {
   "space": {
-    "0":  { "$value": "0",    "$type": "dimension" },
+    "0":  { "$value": "0",    "$type": "dimension", "$description": "SCALE ANCHOR: the zero step of the 4px space ramp. Retained so the scale starts at an explicit, nameable origin and consumers can reset spacing via a token rather than a literal 0. Not dead." },
     "1":  { "$value": "4px",  "$type": "dimension" },
     "2":  { "$value": "8px",  "$type": "dimension" },
     "3":  { "$value": "12px", "$type": "dimension" },

@@ -72,7 +72,7 @@
   input:focus-visible,
   textarea:focus-visible{
     outline:var(--rare-border-width-focus) solid var(--rare-color-focus-ring);
-    outline-offset:2px;
+    outline-offset:var(--rare-border-offset-focus);
     border-radius:var(--rare-radius-sm);
   }
 
@@ -135,12 +135,12 @@
     .nav-toggle{display:inline-flex}
     /* Keep the logo and the close (X) control above the overlay, in place */
     .nav-logo,
-    .nav-toggle{position:relative;z-index:30}
+    .nav-toggle{position:relative;z-index:var(--rare-elevation-z-modal)}
 
     .nav-right{display:none}
     .nav-toggle[aria-expanded="true"] ~ .nav-right{
       display:flex;
-      position:fixed;inset:0;z-index:20;
+      position:fixed;inset:0;z-index:var(--rare-elevation-z-overlay);
       flex-direction:column;align-items:flex-start;
       gap:var(--rare-space-5);
       overflow-y:auto;
@@ -170,7 +170,10 @@
     font-family:var(--rare-font-family-display);
     font-weight:var(--rare-font-weight-extrabold);
     color:var(--rare-color-text-on-brand);
-    font-size:var(--rare-font-size-hero);
+    /* Fluid hero sizing is PAGE COMPOSITION, not a token: the 6vw interpolation is
+       only correct because this headline spans the full-width hero panel. The tokens
+       supply the role bounds (floor → cap); this rule supplies the viewport behaviour. */
+    font-size:clamp(var(--rare-font-size-hero-min), 6vw, var(--rare-font-size-hero));
     line-height:var(--rare-line-height-tight);
     letter-spacing:-.01em;
   }
@@ -235,7 +238,7 @@
      hidden once scrolled to the bottom. JS toggles .is-overflowing / .is-at-bottom. */
   .chat-scroll-hint{
     position:absolute;bottom:.5em;left:50%;transform:translateX(-50%);
-    display:flex;pointer-events:none;z-index:2;
+    display:flex;pointer-events:none;z-index:var(--rare-elevation-z-sticky);
     color:var(--rare-color-text-muted);
     opacity:0;
     transition:opacity var(--rare-motion-duration-base) var(--rare-motion-easing-standard);
@@ -305,7 +308,7 @@
   }
   .acc-num{
     flex:0 0 auto;
-    width:28px;height:28px;border-radius:var(--rare-radius-pill);  /* control dimension — layout constant */
+    width:var(--rare-size-control-sm);height:var(--rare-size-control-sm);border-radius:var(--rare-radius-pill);
     background:var(--rare-color-action-primary);color:var(--rare-color-text-on-brand);
     display:grid;place-items:center;
     font-size:var(--rare-font-size-200);font-weight:var(--rare-font-weight-bold);
@@ -319,8 +322,12 @@
   }
   .acc-trigger[aria-expanded="true"] .acc-chevron{transform:rotate(180deg)}
   .acc-panel{
-    /* left indent aligns panel text under the label: acc-num 28 + gap 12 + trigger pad 20 = 60px */
-    padding:0 var(--rare-space-5) 0 60px;
+    /* Left indent aligns panel text under the trigger's label, derived from the
+       three tokens that produce it rather than hard-coding their sum: the step
+       badge (control-sm 28) + the trigger's gap (space-3 12) + its inline
+       padding (space-5 20) = 60px. Retune any of the three and this follows. */
+    padding:0 var(--rare-space-5) 0
+            calc(var(--rare-size-control-sm) + var(--rare-space-3) + var(--rare-space-5));
     max-height:0;overflow:hidden;
     transition:max-height var(--rare-motion-duration-base) var(--rare-motion-easing-standard);
     color:var(--rare-color-text-muted);
@@ -338,9 +345,19 @@
     /* Matches the container gutter so the scroller can align cards to content. */
     --cases-gutter:var(--rare-space-6);
 
-    /* Product-scope card-hover rotation (composition, not a Core role): each card
-       fills with a Core secondary-accent tint and reveals text in the matching
-       dark accent shade. Every fill/ink pair clears WCAG AA on the tint. */
+    /* Product-scope card-hover rotation: each card fills with a Core secondary-accent
+       tint and reveals text in the matching dark accent shade. Every fill/ink pair
+       clears WCAG AA on the tint.
+
+       TIER NOTE — these --ca-* bindings reach a PRIMITIVE directly, skipping the
+       semantic tier. That is RATIFIED, not a defect (Layer & Naming spec, rule 3):
+       product-scope composition with no role meaning may bind straight to a
+       primitive. "Card 3 is the orange one" is a composition choice, not a brand
+       decision; minting semantics like `color.semantic.card-3-fill` would invent
+       fake roles that carry no intent and would pollute Core with page trivia.
+       The rule's limit: this applies only to product-scope values. A binding that
+       DOES carry role meaning (an action colour, a text colour, a surface) must
+       still go through a semantic. See design-tokens/README.md. */
     --ca-card-fill-1:var(--rare-color-cyan-100);   --ca-card-ink-1:var(--rare-color-cyan-700);
     --ca-card-fill-2:var(--rare-color-lime-100);   --ca-card-ink-2:var(--rare-color-lime-700);
     --ca-card-fill-3:var(--rare-color-orange-100); --ca-card-ink-3:var(--rare-color-orange-700);
@@ -436,7 +453,7 @@
     width:40%;
     height:auto;
     opacity:0;
-    z-index:0;
+    z-index:var(--rare-elevation-z-base);
     pointer-events:none;
     transition:opacity var(--rare-motion-duration-fast) var(--rare-motion-easing-standard);
   }
@@ -446,7 +463,7 @@
      let the text stand alone. (display:none also skips the lazy fetch.) */
   @media (max-width:1024px){ .case-media{display:none} }
   /* Keep text above the illustration. */
-  .case-card > :where(.case-title, .case-desc, .case-reveal){position:relative;z-index:1}
+  .case-card > :where(.case-title, .case-desc, .case-reveal){position:relative;z-index:var(--rare-elevation-z-raised)}
 
   .cases-controls{
     display:flex;align-items:center;justify-content:flex-end;
@@ -454,7 +471,7 @@
   }
   .cases-nav{display:flex;gap:var(--rare-space-2)}
   .car-btn{
-    width:40px;height:40px;border-radius:var(--rare-radius-md);cursor:pointer;  /* control dimension — layout constant */
+    width:var(--rare-size-control-md);height:var(--rare-size-control-md);border-radius:var(--rare-radius-md);cursor:pointer;
     border:var(--rare-border-width-default) solid var(--rare-color-border-strong);
     background:var(--rare-color-background-default);
     display:grid;place-items:center;color:var(--rare-color-text-default);

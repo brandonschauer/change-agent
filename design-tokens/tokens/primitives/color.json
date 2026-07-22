@@ -20,17 +20,17 @@
     },
     "cyan": {
       "100": { "$value": "#E0F5FA", "$type": "color", "$description": "Secondary accent cyan tint — soft decorative surface." },
-      "500": { "$value": "#00AFD8", "$type": "color", "$description": "Secondary accent — light blue." },
+      "500": { "$value": "#00AFD8", "$type": "color", "$description": "Rare Cyan — brand-guide SECONDARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface." },
       "700": { "$value": "#08627A", "$type": "color", "$description": "Secondary accent cyan shade — AA-safe reveal ink on cyan.100 (6.1:1)." }
     },
     "orange": {
       "100": { "$value": "#FEF0E7", "$type": "color", "$description": "Secondary accent orange tint — soft decorative surface." },
-      "500": { "$value": "#F58233", "$type": "color", "$description": "Secondary accent — orange." },
+      "500": { "$value": "#F58233", "$type": "color", "$description": "Rare Orange — brand-guide SECONDARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface." },
       "700": { "$value": "#A34D17", "$type": "color", "$description": "Secondary accent orange shade — AA-safe reveal ink on orange.100 (5.2:1)." }
     },
     "lime": {
       "100": { "$value": "#EFF7E0", "$type": "color", "$description": "Secondary accent lime tint — soft decorative surface." },
-      "500": { "$value": "#7AB800", "$type": "color", "$description": "Secondary accent — bright green." },
+      "500": { "$value": "#7AB800", "$type": "color", "$description": "Rare Lime — brand-guide SECONDARY. Brand-guide palette value, retained in Core for cross-consumer use; may be unused on any given surface." },
       "700": { "$value": "#4A6B00", "$type": "color", "$description": "Secondary accent lime shade — AA-safe reveal ink on lime.100 (5.6:1)." }
     },
     "yellow": {
