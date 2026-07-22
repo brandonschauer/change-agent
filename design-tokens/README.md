@@ -15,13 +15,79 @@ committed file; any difference means the generated file was hand-edited or the b
 
 ```
 tokens/
-  primitives/   tier 1 — raw brand values (color, space, radius, size, motion, typography)
+  primitives/   tier 1 — raw brand values (color, space, radius, size, elevation, motion, typography)
   semantic/     tier 2 — role-based aliases that reference primitives
-  components/   tier 3 — component slots bound to semantics
+  product/      page-calibrated component tokens — NOT published (see "Core vs product")
 ```
 
 The reference chain flows one direction: **component → semantic → primitive**. `outputReferences: true`
 preserves that chain as live `var()` refs, so editing one primitive re-themes everything downstream.
+
+## Build targets
+
+| Command | Output | Contains | Published? |
+|---|---|---|---|
+| `tokens:build:full` | `build/rare-tokens.css` | primitives + semantics + product | No — this is what **this page** links |
+| `tokens:build:core` | `build/rare-core.css` | primitives + semantics only | **Yes** — becomes the shared `rare-tokens` package |
+
+`tokens:build` runs both. Keeping them as two targets makes the Core/product boundary machine-enforced
+and visible in a diff, rather than a convention someone has to remember at extraction time.
+
+---
+
+## Core vs product: what may be published
+
+`tokens/product/` holds component tokens whose values embed **this page's** layout math — specifically
+`clamp()` expressions carrying viewport units (`52.8vw`, `1.76vw`, `26vw`).
+
+> **Viewport-relative values are not portable.** `vw` resolves against the viewport, never against the
+> parent. A token calibrated to a full-width hero panel computes a **wrong** size the moment it renders
+> inside a sidebar, modal, or split pane. Publishing one exports a latent layout bug.
+
+So they stay in this repo and are excluded from `rare-core.css`:
+
+| Token | Why it cannot be published |
+|---|---|
+| `chat-preview.width` | `52.8vw`, calibrated to the full-width hero panel |
+| `chat-preview.font` | `1.76vw`, same calibration |
+| `case-card.width` | `26vw`, calibrated to the full-bleed carousel |
+| `case-card.aspect-ratio` | No viewport math, but meaningless without `case-card.width` |
+
+Each carries a `PRODUCT-SCOPE — NOT PUBLISHED` prefix in its `$description`, so the marker survives into
+the generated CSS.
+
+**Promotion path:** if a product token is later shown to be genuinely context-free, move its file from
+`tokens/product/` into `tokens/semantic/` (or `primitives/`). It then appears in `rare-core.css`
+automatically — that move *is* the promotion, and it shows up as a reviewable diff.
+
+**Corollary — keep layout rules out of semantics.** A semantic encodes a *role*, not a layout behaviour.
+`font.size.hero` is the worked example: it once held `clamp({font.size.700}, 6vw, {font.size.1000})`,
+which made it unusable by any consumer whose context differed. It now points at a scale step
+(`{font.size.1000}`), paired with `font.size.hero-min` as the floor, and the surface composes its own
+`clamp(...)` in page CSS where the container is known.
+
+---
+
+## Layer & Naming spec, rule 3: product-scope composition may bind directly to a primitive
+
+The reference chain is **component → semantic → primitive**, and a binding that carries *role meaning*
+must always pass through a semantic. There is one ratified exception:
+
+> **Product-scope composition with no role meaning MAY bind directly to a primitive.** Inventing a
+> semantic to satisfy the chain — `color.semantic.card-3-fill` — would be a *fake semantic*: a name that
+> carries no intent, describes no reusable decision, and pollutes Core with one page's trivia.
+
+The worked example is the use-case card-hover rotation in `index.html` (`--ca-card-fill-*` /
+`--ca-card-ink-*`), which binds `color.cyan.100` / `color.cyan.700` and friends directly. "Card 3 is the
+orange one" is a composition choice, not a brand decision — there is no role to name.
+
+**The limit of the rule.** It licenses *product-scope* values only. Anything that does carry role
+meaning — an action colour, a text colour, a surface, a feedback state — still goes through a semantic.
+When in doubt, ask whether another surface could reasonably want to inherit the decision. If yes, it is
+a semantic; if the answer is "only this page lays out cards in this order", bind the primitive.
+
+Conformance audits should treat a direct product→primitive binding as **sanctioned when it is
+product-scope and role-free**, and flag it only when the value plainly encodes a reusable role.
 
 ---
 

@@ -341,9 +341,19 @@
     /* Matches the container gutter so the scroller can align cards to content. */
     --cases-gutter:var(--rare-space-6);
 
-    /* Product-scope card-hover rotation (composition, not a Core role): each card
-       fills with a Core secondary-accent tint and reveals text in the matching
-       dark accent shade. Every fill/ink pair clears WCAG AA on the tint. */
+    /* Product-scope card-hover rotation: each card fills with a Core secondary-accent
+       tint and reveals text in the matching dark accent shade. Every fill/ink pair
+       clears WCAG AA on the tint.
+
+       TIER NOTE — these --ca-* bindings reach a PRIMITIVE directly, skipping the
+       semantic tier. That is RATIFIED, not a defect (Layer & Naming spec, rule 3):
+       product-scope composition with no role meaning may bind straight to a
+       primitive. "Card 3 is the orange one" is a composition choice, not a brand
+       decision; minting semantics like `color.semantic.card-3-fill` would invent
+       fake roles that carry no intent and would pollute Core with page trivia.
+       The rule's limit: this applies only to product-scope values. A binding that
+       DOES carry role meaning (an action colour, a text colour, a surface) must
+       still go through a semantic. See design-tokens/README.md. */
     --ca-card-fill-1:var(--rare-color-cyan-100);   --ca-card-ink-1:var(--rare-color-cyan-700);
     --ca-card-fill-2:var(--rare-color-lime-100);   --ca-card-ink-2:var(--rare-color-lime-700);
     --ca-card-fill-3:var(--rare-color-orange-100); --ca-card-ink-3:var(--rare-color-orange-700);
