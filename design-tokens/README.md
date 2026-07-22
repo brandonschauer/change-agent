@@ -33,6 +33,10 @@ preserves that chain as live `var()` refs, so editing one primitive re-themes ev
 `tokens:build` runs both. Keeping them as two targets makes the Core/product boundary machine-enforced
 and visible in a diff, rather than a convention someone has to remember at extraction time.
 
+> Both scripts are also reachable from the repo root: `npm run tokens:build` there delegates here.
+> The root package also provides `npm run lighthouse`, which audits the built page against the WSG
+> budgets in `lighthouse-budget.json`. See the root README/package for details.
+
 ---
 
 ## Core vs product: what may be published
