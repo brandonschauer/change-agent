@@ -35,7 +35,7 @@
   --rare-radius-md: 8px; /** Buttons, inputs. */
   --rare-radius-lg: 12px; /** Accordion items, chat bubbles. */
   --rare-radius-card: 14px; /** Cards / chat panel — preserves v2's 14px. */
-  --rare-radius-xl: 22px; /** Large hero panel. */
+  --rare-radius-xl: 24px; /** Large hero panel. Normalized 22px→24px to sit on the 4px grid; the 2px delta is imperceptible at hero scale. */
   --rare-radius-pill: 9999px; /** Circular / pill controls. */
   --rare-size-container: 1220px; /** Max content width — app/marketing surfaces. */
   --rare-size-container-narrow: 820px; /** Max width for long-form reading columns (legal/policy pages). */
