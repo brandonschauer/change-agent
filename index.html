@@ -322,8 +322,12 @@
   }
   .acc-trigger[aria-expanded="true"] .acc-chevron{transform:rotate(180deg)}
   .acc-panel{
-    /* left indent aligns panel text under the label: acc-num 28 + gap 12 + trigger pad 20 = 60px */
-    padding:0 var(--rare-space-5) 0 60px;
+    /* Left indent aligns panel text under the trigger's label, derived from the
+       three tokens that produce it rather than hard-coding their sum: the step
+       badge (control-sm 28) + the trigger's gap (space-3 12) + its inline
+       padding (space-5 20) = 60px. Retune any of the three and this follows. */
+    padding:0 var(--rare-space-5) 0
+            calc(var(--rare-size-control-sm) + var(--rare-space-3) + var(--rare-space-5));
     max-height:0;overflow:hidden;
     transition:max-height var(--rare-motion-duration-base) var(--rare-motion-easing-standard);
     color:var(--rare-color-text-muted);
