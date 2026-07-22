@@ -6,6 +6,44 @@ a **static, hand-authored HTML site on GitHub Pages** (`index-v2.html` + `CNAME`
 targets that reality.
 
 ---
+
+> # ⚠️ AMENDMENTS — READ FIRST
+>
+> **This document is the Phase 1 kickoff *prompt*, preserved as a historical record of what was
+> originally asked for. Several of its instructions have since been deliberately superseded.**
+>
+> **If you are running a conformance audit, the amendments below win over the body of this document.**
+> The superseded values are still written out verbatim in the sections that follow; do not read them as
+> current targets, and do not flag the shipped implementation for deviating from them.
+>
+> | # | This doc says | Current truth | Decided in |
+> |---|---|---|---|
+> | A | `surface.brand` → `green.500` **#008542** ("keep it on #008542") | `surface.brand` → `blue.500` **#005BBB** (Rare Blue). **The hero is blue by deliberate decision.** | PR #2 |
+> | B | Author `surface.brand-strong`, `accent`, `accent.soft`, `text.on-accent` | All **pruned** — the surfaces that motivated them no longer exist | PR #2 |
+> | C | Author `surface.soft-1..4` / `text.accent-1..4` as semantics | **Demoted to product scope** (`--ca-*` in `index.html`); Core stays role-based | PR #2, ratified PR #7 |
+> | D | `green.500` / `yellow.500` are bound brand values | **Retained in Core but unbound** — brand vocabulary for future consumers. Not dead; do not prune | PR #6 |
+> | E | Author `green.700` #006B35 / `yellow.100` #FBEFC2 | **Not restored** — derived working shades for retired surfaces | PR #6 |
+> | F | Keep v2's Google Fonts `<link>` | **Self-hosted WOFF2** from our own origin (WSG 3.5 — no visitor IP reaches a third party) | PR #3 |
+> | G | `font.size.hero` as a fluid `clamp(…6vw…)` | Reduced to a **role** → `{font.size.1000}`, paired with `font.size.hero-min`. The `6vw` lives in page CSS | PR #7 |
+> | H | `radius.card` 14px / hero radius 22px | `radius.xl` normalized to **24px** (on the 4px grid) | PR #7 |
+> | I | — | **Added since:** `elevation.z.*`, `size.control-sm/md`, `border.offset.focus` | PR #7 |
+> | J | — | **Added since:** `tokens/product/` + `rare-core.css` — page-calibrated tokens are excluded from the publishable Core | PR #7 |
+>
+> ### Contrast note (supersedes STEP 4 below)
+> The body warns that white on `surface.brand` **#008542** is ~4.7:1 — "just over AA with no margin."
+> That risk is **resolved, not mitigated**: the brand surface is now **#005BBB**, where white measures
+> **6.53:1**. All 16 audited pairs pass AA.
+>
+> ### Guardrail status — still in force
+> The original guardrail (*don't let v2's warm palette creep back under new primitive names*) **holds**:
+> `#7DB61C`, `#F5B301`, `#F4F3EF` and `#5a4300` appear nowhere in the token source or the page, and the
+> `#7AB800` back-door is not taken — `lime.500` exists as a brand secondary but is bound to no brand
+> surface.
+>
+> **Governing docs for current rules:** [`design-tokens/README.md`](../../design-tokens/README.md) —
+> retained-primitive convention, Layer & Naming rule 3, and the Core/product publication boundary.
+
+---
  
 ## Decisions this prompt is built on (settled)
 
@@ -24,7 +62,9 @@ targets that reality.
    deliberate palette decision rather than letting it creep back in as "new primitives." (Watch one
    loophole: the authored secondary green `#7AB800` is a near-twin of v2's old hero green `#7DB61C`, so
    pointing `surface.brand` at the secondary would quietly restore the old look — keep it on `#008542`
-   if you want the shift to stick.)
+   if you want the shift to stick.) **[SUPERSEDED — amendment A: `surface.brand` is now `#005BBB`
+   (Rare Blue). The blue hero is a deliberate decision; the guardrail against the *warm* palette still
+   holds.]**
 3. **Branding — keep Change Agent branding in the nav.** No Rare master-logo download from the DAM.
    (The Rare wordmark rules still apply to any "Rare" text: uppercase R, rest lowercase.)
 4. **Naming — rename v2's flat tokens to the semantic contract.** `--rare-blue`, `--hero-green`,
@@ -42,7 +82,8 @@ them). It is the source of truth and wins on any conflict with this prompt.
 later, the Rare logo (full-color, with ™) lives in the DAM linked from <https://rare.org/brand-guide/>.
 
 **Fonts** — keep v2's existing Google Fonts `<link>`; audit and trim to only the weights the page
-actually renders (WSG win). No `next/font`.
+actually renders (WSG win). No `next/font`.  **[SUPERSEDED — amendment F: fonts are now self-hosted
+WOFF2 served from our own origin; the weight-trimming instruction still applies and was carried out.]**
 
 **Implementation target** — `index-v2.html` (single ~30 KB self-contained file).
 
@@ -107,11 +148,13 @@ greens/golds/warm background to the official palette; expect a visible shift:
     the cards go invisible against a white section: background.default (#FFFFFF, raised cards/surfaces),
     background.subtle (→ #F4F6F8, the base page canvas), background.muted (→ #E9EDF1, the darker
     alternating section bands). Then: surface.brand (→ green.500 #008542), surface.brand-strong
-    (→ green.700 #006B35, the hero dark/hover pair), surface.chat-user (→ blue.50 #E6F1FB),
+    (→ green.700 #006B35, the hero dark/hover pair)  **[SUPERSEDED — amendments A/B: surface.brand →
+    blue.500 #005BBB; surface.brand-strong pruned]**, surface.chat-user (→ blue.50 #E6F1FB),
     surface.chat-agent (→ white #FFFFFF + border.default, so it reads distinct from background.subtle
     rather than aliasing the same #F4F6F8).
   · Action: action.primary (→ blue.500 #005BBB), action.primary.hover (→ blue.600 #00499A).
-  · Accent: accent (→ yellow #EEAF00), accent.soft (→ yellow.100 #FBEFC2).
+  · Accent: accent (→ yellow #EEAF00), accent.soft (→ yellow.100 #FBEFC2).  **[SUPERSEDED — amendment B:
+    both pruned; yellow.500 retained as an unbound brand primitive, yellow.100 not restored]**
   · Border: border.default (→ #DDE3E8), border.strong (→ gray.700 #5E6A71).
   · Feedback: feedback.error (→ red #AA1948) — REQUIRED; the waitlist form's validation must use it,
     not a hard-coded red. Add feedback.success/warning only if a surface actually needs them.
@@ -119,7 +162,8 @@ greens/golds/warm background to the official palette; expect a visible shift:
 - Then map EVERY v2 flat token onto one of the above (confirm exact targets from STEP 0's audit).
   Expected mapping: --rare-blue → action.primary (#005BBB, unchanged); --hero-green → surface.brand
   (#008542, changed); --hero-green-dark → surface.brand-strong (#006B35); --accent-gold → accent
-  (#EEAF00, changed); --accent-gold-soft → accent.soft; the gold-card text #5a4300 → text.on-accent;
+  (#EEAF00, changed);  **[SUPERSEDED — amendments A/B: surface.brand is #005BBB; brand-strong and
+  accent pruned]** --accent-gold-soft → accent.soft; the gold-card text #5a4300 → text.on-accent;
   --surface → background.default (#FFFFFF, raised cards stay white); --paper → background.subtle
   (#F4F6F8, base canvas — changed); --paper-warm → background.muted (#E9EDF1, alternating section bands —
   changed). Do NOT map --paper and --surface both to background.default — that flattens v2's tiers and the
@@ -164,7 +208,8 @@ Keep first view ≤ 500 KB (hard cap 1 MB). Since rare-tokens.css is a linked fi
 splits HTML ≤ 30 KB / CSS ≤ 40 KB — keep the total honest. Images AVIF/WebP + responsive srcset + lazy-load
 below the fold; subset Google Fonts to only the weights actually rendered; defer non-critical JS; minify.
 Aim Lighthouse ≥ 90 all categories (LCP < 2.5s, CLS < 0.1, INP < 200ms). After the re-theme, VERIFY WCAG
-contrast on every changed surface. The one to actually watch is white text.on-brand on surface.brand #008542
+contrast on every changed surface. **[SUPERSEDED — see the contrast note in the amendments: the brand surface is #005BBB and white
+measures 6.53:1, so this risk is resolved.]** The one to actually watch is white text.on-brand on surface.brand #008542
 (~4.7:1 — just over AA with no margin, so any thin-weight or small hero text will wobble; darken the surface
 or bump weight/size if so). accent #EEAF00 with text.on-accent (near-black on yellow) and feedback.error on
 white (~7:1) are both safe. Adjust text.on-accent or surface.brand if any pair misses AA.
